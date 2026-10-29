@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How ChatGPT Works: Why It Says Strawberry Has 2 R&#x27;s</title>
+<meta name="description" content="How ChatGPT works, measured on Qwen3-4B: why “strawberry” is a single token, 2,560-number embeddings, attention, the logit lens and why LLMs hallucinate.">
+<meta name="author" content="Arun Prabhakaran">
+<link rel="canonical" href="https://latentailabs.github.io/how-chatgpt-works/">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta property="og:site_name" content="Latent AI Labs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How ChatGPT Works: Why It Says Strawberry Has 2 R&#x27;s">
+<meta property="og:description" content="How ChatGPT works, measured on Qwen3-4B: why “strawberry” is a single token, 2,560-number embeddings, attention, the logit lens and why LLMs hallucinate.">
+<meta property="og:url" content="https://latentailabs.github.io/how-chatgpt-works/">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.ytimg.com/vi/7HBtSz3wSSM/hqdefault.jpg">
+<meta property="og:image:alt" content="How ChatGPT Works: Why It Says Strawberry Has 2 R&#x27;s">
+<meta name="twitter:image" content="https://i.ytimg.com/vi/7HBtSz3wSSM/hqdefault.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="How ChatGPT Works: Why It Says Strawberry Has 2 R&#x27;s">
+<meta name="twitter:description" content="How ChatGPT works, measured on Qwen3-4B: why “strawberry” is a single token, 2,560-number embeddings, attention, the logit lens and why LLMs hallucinate.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#FAFAFA" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0F172A" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
+<link rel="stylesheet" href="/style.css">
+<link rel="alternate" type="text/plain" title="llms.txt" href="/llms.txt">
+<script>(function(){try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<meta property="article:author" content="https://latentailabs.github.io/about/">
+<meta property="article:published_time" content="2026-10-29">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "TechArticle",
+ "@id": "https://latentailabs.github.io/how-chatgpt-works/#article",
+ "headline": "How ChatGPT Works: Why It Says Strawberry Has 2 R's",
+ "alternativeHeadline": "Strawberry Has 2 R's? How ChatGPT Actually Works Under the Hood (Every Number Measured)",
+ "description": "How ChatGPT works, measured on Qwen3-4B: why “strawberry” is a single token, 2,560-number embeddings, attention, the logit lens and why LLMs hallucinate.",
+ "abstract": "ChatGPT-style models predict one token at a time from a flat document rebuilt on every turn, and they never see letters: “ strawberry” is the single token #101830. Measured on Qwen3-4B, words become 2,560-number vectors, attention routes context between them, and the answer “Paris” takes shape by Layer 32 of 36. The model miscounts r's because of tokens, and hallucinates because it is trained for plausibility, not truth.",
+ "url": "https://latentailabs.github.io/how-chatgpt-works/",
+ "mainEntityOfPage": "https://latentailabs.github.io/how-chatgpt-works/",
+ "inLanguage": "en",
+ "datePublished": "2026-10-29",
+ "dateModified": "2026-10-29",
+ "author": {
+  "@type": "Person",
+  "@id": "https://latentailabs.github.io/about/#person",
+  "name": "Arun Prabhakaran",
+  "url": "https://latentailabs.github.io/about/"
+ },
+ "publisher": {
+  "@type": "Organization",
+  "@id": "https://latentailabs.github.io/#organization",
+  "name": "Latent AI Labs",
+  "url": "https://latentailabs.github.io/"
+ },
+ "keywords": "how ChatGPT works, tokenization, embeddings, self-attention, logit lens, LLM hallucination, Qwen3-4B",
+ "isPartOf": {
+  "@type": "CreativeWorkSeries",
+  "name": "How AI Actually Works",
+  "url": "https://latentailabs.github.io/#series-how-ai-works"
+ },
+ "isBasedOn": {
+  "@type": "Article",
+  "headline": "Strawberry Has 2 R's? How ChatGPT Actually Works Under the Hood (Every Number Measured)",
+  "url": "https://pub.towardsai.net/strawberry-has-2-rs-how-chatgpt-actually-works-under-the-hood-every-number-measured-0c6499992573",
+  "datePublished": "2026-10-17",
+  "author": {
+   "@type": "Person",
+   "@id": "https://latentailabs.github.io/about/#person",
+   "name": "Arun Prabhakaran",
+   "url": "https://latentailabs.github.io/about/"
+  },
+  "publisher": {
+   "@type": "Organization",
+   "name": "Towards AI"
+  }
+ },
+ "citation": "https://pub.towardsai.net/strawberry-has-2-rs-how-chatgpt-actually-works-under-the-hood-every-number-measured-0c6499992573",
+ "image": "https://i.ytimg.com/vi/7HBtSz3wSSM/hqdefault.jpg",
+ "video": {
+  "@id": "https://latentailabs.github.io/how-chatgpt-works/#video"
+ }
+}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "@id": "https://latentailabs.github.io/how-chatgpt-works/#faq",
+ "url": "https://latentailabs.github.io/how-chatgpt-works/",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "Why can't ChatGPT count the r's in strawberry?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Because the model never sees letters. A tokenizer turns text into integer IDs before the network runs, and in OpenAI's o200k_base vocabulary “ strawberry” is the single token #101830 (#72600 in Qwen3). With Thinking off, Qwen3-4B answered 2. When it was allowed to spell the word out in a scratchpad, each letter became its own token, the attention heads could count them, and it answered 3."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Does ChatGPT remember my previous messages?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Not inside the network. The model is stateless: on every turn the app rebuilds one flat document containing hidden system instructions, the earlier turns of your chat, your new question and a marker saying it is the assistant's turn. The model only predicts the next piece of text for that document, then repeats the loop. The conversation history is the memory, and the weights do not change while you chat."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Why does clicking Regenerate give a different answer?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "At the top of the network the model outputs a score for every token in its roughly 151,936-entry vocabulary, and softmax turns those scores into probabilities. For “The Eiffel Tower is in the city of”, Qwen3-4B-Base gave “ Paris” 31%. A sampler then rolls a weighted die shaped by temperature: near 0 it always takes the top token, around 0.7 it varies naturally, and above 2.0 it drifts into gibberish."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Why does ChatGPT make things up (hallucinate)?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "An LLM has no database to look facts up in, only weights trained to produce plausible continuations. Asked which city the Kesharpur Tower is in, a tower that does not exist, Qwen3-4B said it was in Bihar. The article points to three causes: training rewards confident-sounding text, benchmark grading gives a guess more expected points than “I don't know”, and once wrong tokens are written, later tokens build on them."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How is ChatGPT trained?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "In three stages. Pre-training teaches next-token prediction on huge amounts of text; Meta's Llama 3 used 15.6 trillion tokens on up to 16,000 H100 GPUs, roughly 250,000 years of reading at 8 hours a day. Supervised fine-tuning then teaches the user and assistant turn format from example conversations. Finally, RLHF trains a reward model on human rankings of answers and optimises the LLM toward the responses people prefer."
+   }
+  }
+ ]
+}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "BreadcrumbList",
+ "itemListElement": [
+  {
+   "@type": "ListItem",
+   "position": 1,
+   "name": "Home",
+   "item": "https://latentailabs.github.io/"
+  },
+  {
+   "@type": "ListItem",
+   "position": 2,
+   "name": "How AI Actually Works",
+   "item": "https://latentailabs.github.io/#series-how-ai-works"
+  },
+  {
+   "@type": "ListItem",
+   "position": 3,
+   "name": "Ep 1",
+   "item": "https://latentailabs.github.io/how-chatgpt-works/"
+  }
+ ]
+}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "VideoObject",
+ "@id": "https://latentailabs.github.io/how-chatgpt-works/#video",
+ "name": "Strawberry Has 2 R's? How ChatGPT Actually Works",
+ "description": "How ChatGPT works, measured on Qwen3-4B: why “strawberry” is a single token, 2,560-number embeddings, attention, the logit lens and why LLMs hallucinate.",
+ "thumbnailUrl": [
+  "https://i.ytimg.com/vi/7HBtSz3wSSM/hqdefault.jpg"
+ ],
+ "embedUrl": "https://www.youtube-nocookie.com/embed/7HBtSz3wSSM",
+ "contentUrl": "https://www.youtube.com/watch?v=7HBtSz3wSSM",
+ "url": "https://www.youtube.com/watch?v=7HBtSz3wSSM",
+ "author": {
+  "@type": "Person",
+  "@id": "https://latentailabs.github.io/about/#person",
+  "name": "Arun Prabhakaran",
+  "url": "https://latentailabs.github.io/about/"
+ },
+ "publisher": {
+  "@type": "Organization",
+  "@id": "https://latentailabs.github.io/#organization",
+  "name": "Latent AI Labs",
+  "url": "https://latentailabs.github.io/"
+ },
+ "uploadDate": "2026-10-14"
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+<div class="bar">
+<a class="brand" href="/" aria-label="Latent AI Labs home"><svg class="mark" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2 22 12 12 22 2 12Z" fill="currentColor"/><path d="M12 7.5 16.5 12 12 16.5 7.5 12Z" fill="var(--bg)"/></svg><span>Latent AI Labs</span></a>
+<nav class="nav" aria-label="Main">
+<a href="/#series">Series</a>
+<a href="/about/">About</a>
+<a href="https://www.youtube.com/@LatentAILabs" rel="me">YouTube</a>
+<a href="https://medium.com/@arunp0" rel="me">Medium</a>
+</nav>
+<button class="theme-toggle" type="button" aria-label="Toggle dark mode" aria-pressed="false"><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M6.3 17.7l-1.4 1.4M19.1 4.9l-1.4 1.4"/></svg></button>
+</div>
+</header>
+<main id="main">
+<div class="container article-wrap">
+<nav class="crumbs mono" aria-label="Breadcrumb"><ol>
+<li><a href="/">Home</a></li>
+<li><a href="/#series-how-ai-works">How AI Actually Works</a></li>
+<li aria-current="page">Ep 1</li>
+</ol></nav>
+<article class="prose">
+<header class="art-head">
+<p class="eyebrow">EP 01 · How AI Actually Works</p>
+<h1>Strawberry Has 2 R&#x27;s? How ChatGPT Actually Works Under the Hood (Every Number Measured)</h1>
+<p class="dek">One question traced through Qwen3-4B: tokens, embeddings, attention, the logit lens, sampling, training and a live hallucination.</p>
+<p class="meta mono">By <a href="/about/">Arun Prabhakaran</a> · Originally published 17 Oct 2026 in Towards AI · 11 min full read</p>
+</header>
+<section class="tldr" aria-labelledby="tldr-h">
+<h2 id="tldr-h" class="eyebrow">TL;DR</h2>
+<p>ChatGPT-style models predict one token at a time from a flat document rebuilt on every turn, and they never see letters: “ strawberry” is the single token #101830. Measured on Qwen3-4B, words become 2,560-number vectors, attention routes context between them, and the answer “Paris” takes shape by Layer 32 of 36. The model miscounts r&#x27;s because of tokens, and hallucinates because it is trained for plausibility, not truth.</p>
+</section>
+<ul class="chips readout" aria-label="Key measurements"><li><span class="v">#101830</span><span class="l">strawberry token</span></li><li><span class="v">2,560</span><span class="l">dims per embedding</span></li><li><span class="v">36</span><span class="l">layers</span></li><li><span class="v">92%</span><span class="l">attention it → animal</span></li><li><span class="v">31%</span><span class="l">P(Paris)</span></li></ul>
+<figure class="video">
+<a class="yt" href="https://www.youtube.com/watch?v=7HBtSz3wSSM" data-yt="7HBtSz3wSSM" data-title="Strawberry Has 2 R&#x27;s? How ChatGPT Actually Works" aria-label="Play video: Strawberry Has 2 R&#x27;s? How ChatGPT Actually Works">
+<img src="https://i.ytimg.com/vi/7HBtSz3wSSM/hqdefault.jpg" alt="" width="480" height="360" fetchpriority="high" decoding="async">
+<span class="play" aria-hidden="true"><svg class="i" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polygon points="7 4 20 12 7 20 7 4"/></svg></span>
+</a>
+<figcaption>Companion video · <a href="https://www.youtube.com/watch?v=7HBtSz3wSSM">Strawberry Has 2 R&#x27;s? How ChatGPT Actually Works</a></figcaption>
+</figure>
+<section aria-labelledby="sum">
+<h2 id="sum">Summary</h2>
+<p>This article follows one question, “Which city is the Eiffel Tower in?”, through Qwen3-4B, an open-weight model built on the same transformer recipe as ChatGPT, with probes on every layer. It opens with a puzzle: with Thinking switched off, the model says “strawberry” has 2 r&#x27;s; with Thinking on, it says 3.</p>
+<p>The explanation starts before the network runs. The chat app rebuilds the whole conversation as one flat document on every turn, so the model has no memory of you; the history is the memory. A tokenizer then turns text into integer IDs. In OpenAI&#x27;s o200k_base vocabulary, “ strawberry” is the single token #101830 (#72600 in Qwen3), so its letters are never visible. The same question costs 6 tokens in English and 11 in Hindi.</p>
+<p>Each token becomes a 2,560-number embedding in which Paris sits near France and 巴黎. Self-attention lets words borrow context: one head looking from “it” puts 92% of its weight on “animal”. Through a logit lens, “Paris” only takes first place at Layer 32 of 36, after the base model spends Layers 24–28 predicting a fill-in-the-blank underline. Its final distribution gives “ Paris” 31%, and temperature decides how that weighted die is rolled.</p>
+<p>The article also walks through the three training stages (pre-training, SFT and RLHF; Llama 3 used 15.6 trillion tokens, about 250,000 years of human reading) and a live hallucination: asked about an invented “Kesharpur Tower”, the model confidently placed it in Bihar. Thinking mode fixes strawberry because spelling the word out turns each letter into its own token that attention can count.</p>
+<p class="note">This page is a short summary written for this site. Every figure, table, code sample and reference is in the <a href="https://pub.towardsai.net/strawberry-has-2-rs-how-chatgpt-actually-works-under-the-hood-every-number-measured-0c6499992573">original article on Towards AI</a>.</p>
+</section>
+<section class="faq" aria-labelledby="faq-h">
+<h2 id="faq-h">Questions this article answers</h2>
+<details open><summary><span>Why can&#x27;t ChatGPT count the r&#x27;s in strawberry?</span><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg></summary><p>Because the model never sees letters. A tokenizer turns text into integer IDs before the network runs, and in OpenAI&#x27;s o200k_base vocabulary “ strawberry” is the single token #101830 (#72600 in Qwen3). With Thinking off, Qwen3-4B answered 2. When it was allowed to spell the word out in a scratchpad, each letter became its own token, the attention heads could count them, and it answered 3.</p></details>
+<details><summary><span>Does ChatGPT remember my previous messages?</span><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg></summary><p>Not inside the network. The model is stateless: on every turn the app rebuilds one flat document containing hidden system instructions, the earlier turns of your chat, your new question and a marker saying it is the assistant&#x27;s turn. The model only predicts the next piece of text for that document, then repeats the loop. The conversation history is the memory, and the weights do not change while you chat.</p></details>
+<details><summary><span>Why does clicking Regenerate give a different answer?</span><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg></summary><p>At the top of the network the model outputs a score for every token in its roughly 151,936-entry vocabulary, and softmax turns those scores into probabilities. For “The Eiffel Tower is in the city of”, Qwen3-4B-Base gave “ Paris” 31%. A sampler then rolls a weighted die shaped by temperature: near 0 it always takes the top token, around 0.7 it varies naturally, and above 2.0 it drifts into gibberish.</p></details>
+<details><summary><span>Why does ChatGPT make things up (hallucinate)?</span><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg></summary><p>An LLM has no database to look facts up in, only weights trained to produce plausible continuations. Asked which city the Kesharpur Tower is in, a tower that does not exist, Qwen3-4B said it was in Bihar. The article points to three causes: training rewards confident-sounding text, benchmark grading gives a guess more expected points than “I don&#x27;t know”, and once wrong tokens are written, later tokens build on them.</p></details>
+<details><summary><span>How is ChatGPT trained?</span><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg></summary><p>In three stages. Pre-training teaches next-token prediction on huge amounts of text; Meta&#x27;s Llama 3 used 15.6 trillion tokens on up to 16,000 H100 GPUs, roughly 250,000 years of reading at 8 hours a day. Supervised fine-tuning then teaches the user and assistant turn format from example conversations. Finally, RLHF trains a reward model on human rankings of answers and optimises the LLM toward the responses people prefer.</p></details>
+</section>
+<aside class="cta-card" aria-label="Read the original article">
+<p class="eyebrow">The full story</p>
+<p class="cta-title">Strawberry Has 2 R&#x27;s? How ChatGPT Actually Works Under the Hood (Every Number Measured)</p>
+<p>The complete walkthrough with all measurements, figures and sources. About 11 minutes.</p>
+<div class="btns"><a class="btn primary" href="https://pub.towardsai.net/strawberry-has-2-rs-how-chatgpt-actually-works-under-the-hood-every-number-measured-0c6499992573"><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg><span>Read the full story on Medium</span><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a><a class="btn ghost" href="https://www.youtube.com/watch?v=7HBtSz3wSSM"><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2.5 17a24.1 24.1 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.6 49.6 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.1 24.1 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.6 49.6 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/><path d="m10 15 5-3-5-3z"/></svg><span>Watch the video</span></a></div>
+</aside>
+</article>
+<nav class="pager" aria-label="Previous and next">
+<span></span>
+<a class="next" href="/thinking-models/"><span class="eyebrow">Next · EP 02 →</span>Why AI Says “Wait”: How Thinking Models Work</a>
+</nav>
+<section class="more" aria-labelledby="more-h"><h2 id="more-h" class="eyebrow">More in How AI Actually Works</h2><ul><li><a href="/thinking-models/"><span class="mono">EP 02</span>Why AI Says “Wait”: How Thinking Models Work</a></li><li><a href="/long-context-kv-cache/"><span class="mono">EP 03</span>How LLMs Read a Whole Book: Long Context &amp; KV-Cache</a></li><li><a href="/how-ai-generates-images/"><span class="mono">EP 04</span>Why AI Clocks Say 10:10: How Image Diffusion Works</a></li><li><a href="/how-vlms-see-images/"><span class="mono">EP 05</span>How Vision-Language Models See: ViT, CLIP, SigLIP</a></li><li><a href="/how-ai-generates-video/"><span class="mono">EP 06</span>How AI Generates Video: Wan2.1 and Sora Explained</a></li></ul></section>
+</div>
+</main>
+<footer class="site-footer">
+<div class="container foot">
+<div>
+<a class="brand" href="/"><svg class="mark" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2 22 12 12 22 2 12Z" fill="currentColor"/><path d="M12 7.5 16.5 12 12 16.5 7.5 12Z" fill="var(--bg)"/></svg><span>Latent AI Labs</span></a>
+<p class="disamb">Latent AI Labs is Arun Prabhakaran's independent AI-explainer channel. It is a one-person project and is not affiliated with Latent AI, Inc. or Latent Labs.</p>
+</div>
+<ul class="same" aria-label="Profiles">
+<li><a href="https://medium.com/@arunp0" rel="me">Medium</a></li>
+<li><a href="https://www.youtube.com/@LatentAILabs" rel="me">YouTube</a></li>
+<li><a href="https://huggingface.co/arunp0" rel="me">Hugging Face</a></li>
+<li><a href="https://github.com/arunp0" rel="me">GitHub</a></li>
+<li><a href="https://github.com/latentailabs">GitHub (org)</a></li>
+<li><a href="https://www.linkedin.com/in/arunp0/" rel="me">LinkedIn</a></li>
+<li><a href="/llms.txt">llms.txt</a></li>
+<li><a href="/sitemap.xml">Sitemap</a></li>
+</ul>
+<p class="copy mono">© 2026 Arun Prabhakaran · Full articles are published on Medium / Towards AI.</p>
+</div>
+</footer>
+<script>(function(){
+var b=document.querySelector('.theme-toggle');
+if(b){var r0=document.documentElement,c0=r0.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');b.setAttribute('aria-pressed',c0==='dark'?'true':'false');
+b.addEventListener('click',function(){
+var r=document.documentElement,cur=r.getAttribute('data-theme');
+if(!cur){cur=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+var n=cur==='dark'?'light':'dark';r.setAttribute('data-theme',n);
+b.setAttribute('aria-pressed',n==='dark'?'true':'false');
+try{localStorage.setItem('theme',n);}catch(e){}});}
+document.querySelectorAll('a.yt[data-yt]').forEach(function(a){
+a.addEventListener('click',function(ev){
+if(ev.metaKey||ev.ctrlKey||ev.shiftKey||ev.button!==0)return;ev.preventDefault();
+var f=document.createElement('iframe');
+f.src='https://www.youtube-nocookie.com/embed/'+a.getAttribute('data-yt')+'?autoplay=1&rel=0';
+f.title=a.getAttribute('data-title')||'YouTube video';
+f.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+f.allowFullscreen=true;f.referrerPolicy='strict-origin-when-cross-origin';
+a.replaceWith(f);f.focus();});});
+})();</script>
+</body>
+</html>

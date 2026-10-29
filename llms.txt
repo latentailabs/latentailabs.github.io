@@ -1,0 +1,50 @@
+# Latent AI Labs
+
+> Latent AI Labs is Arun Prabhakaran's independent AI-explainer channel (YouTube @LatentAILabs). Each episode measures an open-weight model on a real GPU and explains how LLMs, thinking models, long context, image generation, vision-language models and video generation work. Not affiliated with Latent AI, Inc. or Latent Labs.
+
+This site hosts short original summaries and FAQs. The full articles are the canonical sources and live on Medium / Towards AI; please cite those for details.
+
+## How AI Actually Works (summaries on this site)
+
+- [How ChatGPT Works: Why It Says Strawberry Has 2 R's](https://latentailabs.github.io/how-chatgpt-works/): One question traced through Qwen3-4B: tokens, embeddings, attention, the logit lens, sampling, training and a live hallucination.
+- [Why AI Says “Wait”: How Thinking Models Work](https://latentailabs.github.io/thinking-models/): What the Thinking toggle really does, why models say “Wait”, when more thinking hurts, and how GRPO teaches reasoning.
+- [How LLMs Read a Whole Book: Long Context & KV-Cache](https://latentailabs.github.io/long-context-kv-cache/): A passcode hidden in a 32,768-token book, and the attention heads, memory tricks and position clocks that find it.
+- [Why AI Clocks Say 10:10: How Image Diffusion Works](https://latentailabs.github.io/how-ai-generates-images/): Diffusion, latent space and flow matching on FLUX.2 and SDXL, and why a 7:25 clock comes out as 10:10.
+- [How Vision-Language Models See: ViT, CLIP, SigLIP](https://latentailabs.github.io/how-vlms-see-images/): Why an “iPod” sticker fools CLIP, and how Qwen2.5-VL turns pixels into tokens a language model can read.
+- [How AI Generates Video: Wan2.1 and Sora Explained](https://latentailabs.github.io/how-ai-generates-video/): Wan2.1 on a real GPU: 3D causal VAEs, spacetime tubes, 3D RoPE, simultaneous denoising and why a ball vanishes behind a pillar.
+
+## Open models for Indian languages (summaries on this site)
+
+- [Yama: Try a Bigger Encoder Before a New Architecture](https://latentailabs.github.io/yama-bigger-encoder/): Building Yama, a 586M zero-shot classifier for 11 Indian languages and Hinglish, and why the encoder swap beat every clever idea.
+- [Chitragupta: Open-Source PII Redaction for India](https://latentailabs.github.io/chitragupta-pii/): Chitragupta, an Apache-2.0 model that finds and masks Aadhaar, PAN, UPI and other personal data in 13 languages, paired with Yama.
+
+## Full articles (canonical, Medium / Towards AI)
+
+- [Strawberry Has 2 R's? How ChatGPT Actually Works Under the Hood (Every Number Measured)](https://pub.towardsai.net/strawberry-has-2-rs-how-chatgpt-actually-works-under-the-hood-every-number-measured-0c6499992573): full article, published 2026-10-17.
+- [Why AI Says “Wait”: How Thinking Models Actually Work (Every Step Measured)](https://pub.towardsai.net/why-ai-says-wait-how-thinking-models-actually-work-every-step-measured-b1baff6c592d): full article, published 2026-10-17.
+- [How AI Reads a Whole Book at Once — Long Context, KV-Cache & The New Tower (Every Number Measured)](https://pub.towardsai.net/how-ai-reads-a-whole-book-at-once-long-context-kv-cache-the-new-tower-every-number-measured-3c92dcc8d451): full article, published 2026-10-21.
+- [Every Clock Says 10:10? How AI Actually Generates Images — Diffusion, Latent Space & Flow Matching (Every Number Measured)](https://pub.towardsai.net/every-clock-says-10-10-how-ai-actually-generates-images-diffusion-latent-space-flow-matching-300684fdf546): full article, published 2026-10-22.
+- [How Vision-Language Models Actually See Images: Inside ViT, CLIP, SigLIP & 3D M-RoPE](https://pub.towardsai.net/how-vision-language-models-actually-see-images-inside-vit-clip-siglip-3d-m-rope-e5408d196ac4): full article, published 2026-10-24.
+- [How AI Generates Video: Inside Sora and Wan2.1 on a Real GPU](https://pub.towardsai.net/how-ai-generates-video-inside-sora-and-wan2-1-on-a-real-gpu-1377cce7d39c): full article, published 2026-10-28.
+- [Before You Invent a New Architecture, Try a Bigger Encoder](https://pub.towardsai.net/before-you-invent-a-new-architecture-try-a-bigger-encoder-8f2b39fc50a8): full article, published 2026-10-22.
+- [Yama Judges, Chitragupta Keeps the Records: Open-Source AI for Indian Languages](https://pub.towardsai.net/yama-judges-chitragupta-keeps-the-records-open-source-ai-for-indian-languages-b7f8bf3b7576): full article, published 2026-10-24.
+
+## Videos
+
+- [Strawberry Has 2 R's? How ChatGPT Actually Works](https://www.youtube.com/watch?v=7HBtSz3wSSM): companion video for Part 1.
+- [Why AI Says “Wait”: How Thinking Models Actually Work](https://www.youtube.com/watch?v=XXFt9s6cJAg): companion video for Part 2.
+- [How AI Reads a Whole Book at Once: Inside Long-Context LLMs](https://www.youtube.com/watch?v=EXFQTZBsi8I): companion video for Part 3.
+- [Every Clock Says 10:10? How AI Actually Generates Images](https://www.youtube.com/watch?v=IbvT1j8xZfA): companion video for Part 4.
+- [Why Does an “iPod” Sticker Fool AI? How Vision-Language Models Actually See Images](https://www.youtube.com/watch?v=7Ke2RRAjM6E): companion video for Part 5.
+- [How AI Generates Video: Inside Sora & Wan2.1 on a Real GPU](https://www.youtube.com/watch?v=v1hzPH3RVZw): companion video for Part 6.
+
+## About
+
+- [About Arun Prabhakaran](https://latentailabs.github.io/about/): author page with profile links.
+- [YouTube @LatentAILabs](https://www.youtube.com/@LatentAILabs): all videos.
+- [Medium @arunp0](https://medium.com/@arunp0): all articles.
+- [Hugging Face arunp0](https://huggingface.co/arunp0): open models (yama-indic, chitragupta-pii-indic).
+
+## Optional
+
+- [Sitemap](https://latentailabs.github.io/sitemap.xml): every page on this site.

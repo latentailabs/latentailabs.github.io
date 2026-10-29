@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Why AI Clocks Say 10:10: How Image Diffusion Works</title>
+<meta name="description" content="How AI generates images, measured on FLUX.2 and SDXL: noise schedules, latent space, VAEs, CLIP vs Qwen3 text encoders, CFG, seeds and 4-step distillation.">
+<meta name="author" content="Arun Prabhakaran">
+<link rel="canonical" href="https://latentailabs.github.io/how-ai-generates-images/">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta property="og:site_name" content="Latent AI Labs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Why AI Clocks Say 10:10: How Image Diffusion Works">
+<meta property="og:description" content="How AI generates images, measured on FLUX.2 and SDXL: noise schedules, latent space, VAEs, CLIP vs Qwen3 text encoders, CFG, seeds and 4-step distillation.">
+<meta property="og:url" content="https://latentailabs.github.io/how-ai-generates-images/">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.ytimg.com/vi/IbvT1j8xZfA/hqdefault.jpg">
+<meta property="og:image:alt" content="Why AI Clocks Say 10:10: How Image Diffusion Works">
+<meta name="twitter:image" content="https://i.ytimg.com/vi/IbvT1j8xZfA/hqdefault.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Why AI Clocks Say 10:10: How Image Diffusion Works">
+<meta name="twitter:description" content="How AI generates images, measured on FLUX.2 and SDXL: noise schedules, latent space, VAEs, CLIP vs Qwen3 text encoders, CFG, seeds and 4-step distillation.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#FAFAFA" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0F172A" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
+<link rel="stylesheet" href="/style.css">
+<link rel="alternate" type="text/plain" title="llms.txt" href="/llms.txt">
+<script>(function(){try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<meta property="article:author" content="https://latentailabs.github.io/about/">
+<meta property="article:published_time" content="2026-10-29">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "TechArticle",
+ "@id": "https://latentailabs.github.io/how-ai-generates-images/#article",
+ "headline": "Why AI Clocks Say 10:10: How Image Diffusion Works",
+ "alternativeHeadline": "Every Clock Says 10:10? How AI Actually Generates Images — Diffusion, Latent Space & Flow Matching (Every Number Measured)",
+ "description": "How AI generates images, measured on FLUX.2 and SDXL: noise schedules, latent space, VAEs, CLIP vs Qwen3 text encoders, CFG, seeds and 4-step distillation.",
+ "abstract": "Image models start from random static and follow a learned velocity field back to a photo, fixing composition first and fine detail last, inside a compressed latent space that makes attention 65,536× cheaper. Text steers the process through a text encoder and classifier-free guidance. Clocks come out at 10:10 because the training photos are full of them, and fast 4-step distilled models snap to that most common mode.",
+ "url": "https://latentailabs.github.io/how-ai-generates-images/",
+ "mainEntityOfPage": "https://latentailabs.github.io/how-ai-generates-images/",
+ "inLanguage": "en",
+ "datePublished": "2026-10-29",
+ "dateModified": "2026-10-29",
+ "author": {
+  "@type": "Person",
+  "@id": "https://latentailabs.github.io/about/#person",
+  "name": "Arun Prabhakaran",
+  "url": "https://latentailabs.github.io/about/"
+ },
+ "publisher": {
+  "@type": "Organization",
+  "@id": "https://latentailabs.github.io/#organization",
+  "name": "Latent AI Labs",
+  "url": "https://latentailabs.github.io/"
+ },
+ "keywords": "diffusion models, flow matching, latent space, VAE, classifier-free guidance, FLUX.2, Stable Diffusion XL",
+ "isPartOf": {
+  "@type": "CreativeWorkSeries",
+  "name": "How AI Actually Works",
+  "url": "https://latentailabs.github.io/#series-how-ai-works"
+ },
+ "isBasedOn": {
+  "@type": "Article",
+  "headline": "Every Clock Says 10:10? How AI Actually Generates Images — Diffusion, Latent Space & Flow Matching (Every Number Measured)",
+  "url": "https://pub.towardsai.net/every-clock-says-10-10-how-ai-actually-generates-images-diffusion-latent-space-flow-matching-300684fdf546",
+  "datePublished": "2026-10-22",
+  "author": {
+   "@type": "Person",
+   "@id": "https://latentailabs.github.io/about/#person",
+   "name": "Arun Prabhakaran",
+   "url": "https://latentailabs.github.io/about/"
+  },
+  "publisher": {
+   "@type": "Organization",
+   "name": "Towards AI"
+  }
+ },
+ "citation": "https://pub.towardsai.net/every-clock-says-10-10-how-ai-actually-generates-images-diffusion-latent-space-flow-matching-300684fdf546",
+ "image": "https://i.ytimg.com/vi/IbvT1j8xZfA/hqdefault.jpg",
+ "video": {
+  "@id": "https://latentailabs.github.io/how-ai-generates-images/#video"
+ }
+}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "@id": "https://latentailabs.github.io/how-ai-generates-images/#faq",
+ "url": "https://latentailabs.github.io/how-ai-generates-images/",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "Why do AI image generators always draw clocks at 10:10?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Because most clock photos in the training data show 10:10, the time catalogues and stock photographers favour because it frames the logo. In latent space that makes 10:10 a strong attractor for “clock”. Asked for 7:25, the 4-step distilled FLUX.2 model drew 10:10 on 4 of 4 seeds, and even the 50-step base model with guidance 4.0 did so on 3 of 4. Few-step distillation strengthens the pull toward the most common mode."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Why can't AI draw a wine glass filled to the brim?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "The training prior wins. Almost every wine glass in photos is poured about half full, so the unconditional prediction pulls hard toward that level. Classifier-free guidance only extrapolates from the empty-prompt prediction toward your prompt, and “filled to the absolute brim” points into a region with almost no training examples. In the article's test, all 4 seeds stopped at roughly 50% full."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How does diffusion turn noise into an image?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Training blends a clean image with Gaussian noise along a straight line and teaches the network to predict the way back. Noise destroys fine detail first: at σ = 0.30, 88.2% of the fox photo's fur and whisker frequencies were gone while 96.8% of the global structure survived. Generation runs this in reverse, fixing composition early, then shape, then texture. A 50-step FLUX.2 run produced the 1024 × 1024 image in 7.91 seconds."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "What is latent space in Stable Diffusion and FLUX?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "A compressed version of the image made by a variational autoencoder. A 1024 × 1024 picture is downsampled 8× per side and patchified into 4,096 latent tokens, so attention handles 16,777,216 pairs instead of about 1.10 trillion for raw pixels, a 65,536× reduction. How much the VAE keeps matters: SDXL's 4-channel latent melted 12pt text, while FLUX.2's 32-channel latent stayed sharp, scoring 37.55 dB against 33.24 dB."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "What does the CFG scale do in AI image generation?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Classifier-free guidance runs the model twice per step, once with your prompt and once with an empty prompt, then pushes the result further in the direction that separates them. In the article's sweep, w = 1.0 looked hazy and muted, w = 4.0 was the sweet spot with 36% more colour saturation, and w = 15.0 produced “deep-fried” neon fur and crushed shadows, because the extrapolation overshoots the space of natural images."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Why does the seed control the layout of an AI image?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "The seed fixes the starting grid of random noise, and rectified flow follows a deterministic path from it. Low-frequency bright and dark patches in that noise act like a map for the composition. Holding Seed 42 fixed and changing only “red fox” to “red cat” kept the same horizon, tree and sun, giving a 21.02 dB pixel match and a 0.903 correlation with the fox image."
+   }
+  }
+ ]
+}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "BreadcrumbList",
+ "itemListElement": [
+  {
+   "@type": "ListItem",
+   "position": 1,
+   "name": "Home",
+   "item": "https://latentailabs.github.io/"
+  },
+  {
+   "@type": "ListItem",
+   "position": 2,
+   "name": "How AI Actually Works",
+   "item": "https://latentailabs.github.io/#series-how-ai-works"
+  },
+  {
+   "@type": "ListItem",
+   "position": 3,
+   "name": "Ep 4",
+   "item": "https://latentailabs.github.io/how-ai-generates-images/"
+  }
+ ]
+}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "VideoObject",
+ "@id": "https://latentailabs.github.io/how-ai-generates-images/#video",
+ "name": "Every Clock Says 10:10? How AI Actually Generates Images",
+ "description": "How AI generates images, measured on FLUX.2 and SDXL: noise schedules, latent space, VAEs, CLIP vs Qwen3 text encoders, CFG, seeds and 4-step distillation.",
+ "thumbnailUrl": [
+  "https://i.ytimg.com/vi/IbvT1j8xZfA/hqdefault.jpg"
+ ],
+ "embedUrl": "https://www.youtube-nocookie.com/embed/IbvT1j8xZfA",
+ "contentUrl": "https://www.youtube.com/watch?v=IbvT1j8xZfA",
+ "url": "https://www.youtube.com/watch?v=IbvT1j8xZfA",
+ "author": {
+  "@type": "Person",
+  "@id": "https://latentailabs.github.io/about/#person",
+  "name": "Arun Prabhakaran",
+  "url": "https://latentailabs.github.io/about/"
+ },
+ "publisher": {
+  "@type": "Organization",
+  "@id": "https://latentailabs.github.io/#organization",
+  "name": "Latent AI Labs",
+  "url": "https://latentailabs.github.io/"
+ },
+ "uploadDate": "2026-10-22"
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+<div class="bar">
+<a class="brand" href="/" aria-label="Latent AI Labs home"><svg class="mark" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2 22 12 12 22 2 12Z" fill="currentColor"/><path d="M12 7.5 16.5 12 12 16.5 7.5 12Z" fill="var(--bg)"/></svg><span>Latent AI Labs</span></a>
+<nav class="nav" aria-label="Main">
+<a href="/#series">Series</a>
+<a href="/about/">About</a>
+<a href="https://www.youtube.com/@LatentAILabs" rel="me">YouTube</a>
+<a href="https://medium.com/@arunp0" rel="me">Medium</a>
+</nav>
+<button class="theme-toggle" type="button" aria-label="Toggle dark mode" aria-pressed="false"><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M6.3 17.7l-1.4 1.4M19.1 4.9l-1.4 1.4"/></svg></button>
+</div>
+</header>
+<main id="main">
+<div class="container article-wrap">
+<nav class="crumbs mono" aria-label="Breadcrumb"><ol>
+<li><a href="/">Home</a></li>
+<li><a href="/#series-how-ai-works">How AI Actually Works</a></li>
+<li aria-current="page">Ep 4</li>
+</ol></nav>
+<article class="prose">
+<header class="art-head">
+<p class="eyebrow">EP 04 · How AI Actually Works</p>
+<h1>Every Clock Says 10:10? How AI Actually Generates Images — Diffusion, Latent Space &amp; Flow Matching (Every Number Measured)</h1>
+<p class="dek">Diffusion, latent space and flow matching on FLUX.2 and SDXL, and why a 7:25 clock comes out as 10:10.</p>
+<p class="meta mono">By <a href="/about/">Arun Prabhakaran</a> · Originally published 22 Oct 2026 in Towards AI · 18 min full read</p>
+</header>
+<section class="tldr" aria-labelledby="tldr-h">
+<h2 id="tldr-h" class="eyebrow">TL;DR</h2>
+<p>Image models start from random static and follow a learned velocity field back to a photo, fixing composition first and fine detail last, inside a compressed latent space that makes attention 65,536× cheaper. Text steers the process through a text encoder and classifier-free guidance. Clocks come out at 10:10 because the training photos are full of them, and fast 4-step distilled models snap to that most common mode.</p>
+</section>
+<ul class="chips readout" aria-label="Key measurements"><li><span class="v">3,145,728</span><span class="l">numbers per image</span></li><li><span class="v">65,536×</span><span class="l">cheaper attention</span></li><li><span class="v">98.54%</span><span class="l">path straightness</span></li><li><span class="v">396 ms</span><span class="l">4-step render</span></li><li><span class="v">19.97×</span><span class="l">faster than 50 steps</span></li></ul>
+<figure class="video">
+<a class="yt" href="https://www.youtube.com/watch?v=IbvT1j8xZfA" data-yt="IbvT1j8xZfA" data-title="Every Clock Says 10:10? How AI Actually Generates Images" aria-label="Play video: Every Clock Says 10:10? How AI Actually Generates Images">
+<img src="https://i.ytimg.com/vi/IbvT1j8xZfA/hqdefault.jpg" alt="" width="480" height="360" fetchpriority="high" decoding="async">
+<span class="play" aria-hidden="true"><svg class="i" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polygon points="7 4 20 12 7 20 7 4"/></svg></span>
+</a>
+<figcaption>Companion video · <a href="https://www.youtube.com/watch?v=IbvT1j8xZfA">Every Clock Says 10:10? How AI Actually Generates Images</a></figcaption>
+</figure>
+<section aria-labelledby="sum">
+<h2 id="sum">Summary</h2>
+<p>Part 4 turns from text to pictures, running Black Forest Labs&#x27; open FLUX.2 models and Stable Diffusion XL on a 96 GB Blackwell GPU. It starts with three oddities: asked for a clock showing 7:25, the 4-step model drew 10:10 on all 4 seeds; a wine glass “filled to the brim” always stopped about half full; and an empty prompt still produced a portrait, a dining room or a landscape.</p>
+<p>To a GPU, a 1024 × 1024 photo is 3,145,728 numbers, and almost every random point in that space is static. Training mixes an image with Gaussian noise along a straight line, and fine detail dies first: at σ = 0.30 only 11.8% of the fur frequencies survive, while 96.8% of the pose and horizon remain. Generation therefore runs the other way, composition first and whiskers last; in the 50-step run the fox even turns its head between Step 4 and Step 8.</p>
+<p>The model works in a compressed latent space: 4,096 patch tokens instead of a million pixels, a 65,536× cut in attention cost. FLUX.2&#x27;s 32-channel VAE keeps small text legible where SDXL&#x27;s 4-channel one melts it (37.55 dB against 33.24 dB on a text chart). CLIP&#x27;s 77-token limit silently dropped the last 19 tokens of a long prompt, while FLUX.2 reads prompts with Qwen3-4B. Classifier-free guidance pushes away from the empty-prompt prediction, with w = 4.0 as the sweet spot. Rectified-flow paths measured 98.54% straight, which is why a distilled 4-step model renders in 396 ms, 19.97× faster than 50 steps, and also why it snaps to the most common answer: 10:10.</p>
+<p class="note">This page is a short summary written for this site. Every figure, table, code sample and reference is in the <a href="https://pub.towardsai.net/every-clock-says-10-10-how-ai-actually-generates-images-diffusion-latent-space-flow-matching-300684fdf546">original article on Towards AI</a>.</p>
+</section>
+<section class="faq" aria-labelledby="faq-h">
+<h2 id="faq-h">Questions this article answers</h2>
+<details open><summary><span>Why do AI image generators always draw clocks at 10:10?</span><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg></summary><p>Because most clock photos in the training data show 10:10, the time catalogues and stock photographers favour because it frames the logo. In latent space that makes 10:10 a strong attractor for “clock”. Asked for 7:25, the 4-step distilled FLUX.2 model drew 10:10 on 4 of 4 seeds, and even the 50-step base model with guidance 4.0 did so on 3 of 4. Few-step distillation strengthens the pull toward the most common mode.</p></details>
+<details><summary><span>Why can&#x27;t AI draw a wine glass filled to the brim?</span><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg></summary><p>The training prior wins. Almost every wine glass in photos is poured about half full, so the unconditional prediction pulls hard toward that level. Classifier-free guidance only extrapolates from the empty-prompt prediction toward your prompt, and “filled to the absolute brim” points into a region with almost no training examples. In the article&#x27;s test, all 4 seeds stopped at roughly 50% full.</p></details>
+<details><summary><span>How does diffusion turn noise into an image?</span><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg></summary><p>Training blends a clean image with Gaussian noise along a straight line and teaches the network to predict the way back. Noise destroys fine detail first: at σ = 0.30, 88.2% of the fox photo&#x27;s fur and whisker frequencies were gone while 96.8% of the global structure survived. Generation runs this in reverse, fixing composition early, then shape, then texture. A 50-step FLUX.2 run produced the 1024 × 1024 image in 7.91 seconds.</p></details>
+<details><summary><span>What is latent space in Stable Diffusion and FLUX?</span><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg></summary><p>A compressed version of the image made by a variational autoencoder. A 1024 × 1024 picture is downsampled 8× per side and patchified into 4,096 latent tokens, so attention handles 16,777,216 pairs instead of about 1.10 trillion for raw pixels, a 65,536× reduction. How much the VAE keeps matters: SDXL&#x27;s 4-channel latent melted 12pt text, while FLUX.2&#x27;s 32-channel latent stayed sharp, scoring 37.55 dB against 33.24 dB.</p></details>
+<details><summary><span>What does the CFG scale do in AI image generation?</span><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg></summary><p>Classifier-free guidance runs the model twice per step, once with your prompt and once with an empty prompt, then pushes the result further in the direction that separates them. In the article&#x27;s sweep, w = 1.0 looked hazy and muted, w = 4.0 was the sweet spot with 36% more colour saturation, and w = 15.0 produced “deep-fried” neon fur and crushed shadows, because the extrapolation overshoots the space of natural images.</p></details>
+<details><summary><span>Why does the seed control the layout of an AI image?</span><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg></summary><p>The seed fixes the starting grid of random noise, and rectified flow follows a deterministic path from it. Low-frequency bright and dark patches in that noise act like a map for the composition. Holding Seed 42 fixed and changing only “red fox” to “red cat” kept the same horizon, tree and sun, giving a 21.02 dB pixel match and a 0.903 correlation with the fox image.</p></details>
+</section>
+<aside class="cta-card" aria-label="Read the original article">
+<p class="eyebrow">The full story</p>
+<p class="cta-title">Every Clock Says 10:10? How AI Actually Generates Images — Diffusion, Latent Space &amp; Flow Matching (Every Number Measured)</p>
+<p>The complete walkthrough with all measurements, figures and sources. About 18 minutes.</p>
+<div class="btns"><a class="btn primary" href="https://pub.towardsai.net/every-clock-says-10-10-how-ai-actually-generates-images-diffusion-latent-space-flow-matching-300684fdf546"><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg><span>Read the full story on Medium</span><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a><a class="btn ghost" href="https://www.youtube.com/watch?v=IbvT1j8xZfA"><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2.5 17a24.1 24.1 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.6 49.6 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.1 24.1 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.6 49.6 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/><path d="m10 15 5-3-5-3z"/></svg><span>Watch the video</span></a></div>
+</aside>
+</article>
+<nav class="pager" aria-label="Previous and next">
+<a class="prev" href="/long-context-kv-cache/"><span class="eyebrow">← Previous · EP 03</span>How LLMs Read a Whole Book: Long Context &amp; KV-Cache</a>
+<a class="next" href="/how-vlms-see-images/"><span class="eyebrow">Next · EP 05 →</span>How Vision-Language Models See: ViT, CLIP, SigLIP</a>
+</nav>
+<section class="more" aria-labelledby="more-h"><h2 id="more-h" class="eyebrow">More in How AI Actually Works</h2><ul><li><a href="/how-chatgpt-works/"><span class="mono">EP 01</span>How ChatGPT Works: Why It Says Strawberry Has 2 R&#x27;s</a></li><li><a href="/thinking-models/"><span class="mono">EP 02</span>Why AI Says “Wait”: How Thinking Models Work</a></li><li><a href="/long-context-kv-cache/"><span class="mono">EP 03</span>How LLMs Read a Whole Book: Long Context &amp; KV-Cache</a></li><li><a href="/how-vlms-see-images/"><span class="mono">EP 05</span>How Vision-Language Models See: ViT, CLIP, SigLIP</a></li><li><a href="/how-ai-generates-video/"><span class="mono">EP 06</span>How AI Generates Video: Wan2.1 and Sora Explained</a></li></ul></section>
+</div>
+</main>
+<footer class="site-footer">
+<div class="container foot">
+<div>
+<a class="brand" href="/"><svg class="mark" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2 22 12 12 22 2 12Z" fill="currentColor"/><path d="M12 7.5 16.5 12 12 16.5 7.5 12Z" fill="var(--bg)"/></svg><span>Latent AI Labs</span></a>
+<p class="disamb">Latent AI Labs is Arun Prabhakaran's independent AI-explainer channel. It is a one-person project and is not affiliated with Latent AI, Inc. or Latent Labs.</p>
+</div>
+<ul class="same" aria-label="Profiles">
+<li><a href="https://medium.com/@arunp0" rel="me">Medium</a></li>
+<li><a href="https://www.youtube.com/@LatentAILabs" rel="me">YouTube</a></li>
+<li><a href="https://huggingface.co/arunp0" rel="me">Hugging Face</a></li>
+<li><a href="https://github.com/arunp0" rel="me">GitHub</a></li>
+<li><a href="https://github.com/latentailabs">GitHub (org)</a></li>
+<li><a href="https://www.linkedin.com/in/arunp0/" rel="me">LinkedIn</a></li>
+<li><a href="/llms.txt">llms.txt</a></li>
+<li><a href="/sitemap.xml">Sitemap</a></li>
+</ul>
+<p class="copy mono">© 2026 Arun Prabhakaran · Full articles are published on Medium / Towards AI.</p>
+</div>
+</footer>
+<script>(function(){
+var b=document.querySelector('.theme-toggle');
+if(b){var r0=document.documentElement,c0=r0.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');b.setAttribute('aria-pressed',c0==='dark'?'true':'false');
+b.addEventListener('click',function(){
+var r=document.documentElement,cur=r.getAttribute('data-theme');
+if(!cur){cur=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+var n=cur==='dark'?'light':'dark';r.setAttribute('data-theme',n);
+b.setAttribute('aria-pressed',n==='dark'?'true':'false');
+try{localStorage.setItem('theme',n);}catch(e){}});}
+document.querySelectorAll('a.yt[data-yt]').forEach(function(a){
+a.addEventListener('click',function(ev){
+if(ev.metaKey||ev.ctrlKey||ev.shiftKey||ev.button!==0)return;ev.preventDefault();
+var f=document.createElement('iframe');
+f.src='https://www.youtube-nocookie.com/embed/'+a.getAttribute('data-yt')+'?autoplay=1&rel=0';
+f.title=a.getAttribute('data-title')||'YouTube video';
+f.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+f.allowFullscreen=true;f.referrerPolicy='strict-origin-when-cross-origin';
+a.replaceWith(f);f.focus();});});
+})();</script>
+</body>
+</html>
