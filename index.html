@@ -153,6 +153,18 @@
    "position": 8,
    "url": "https://latentailabs.github.io/chitragupta-pii/",
    "name": "Chitragupta: Open-Source PII Redaction for India"
+  },
+  {
+   "@type": "ListItem",
+   "position": 9,
+   "url": "https://latentailabs.github.io/nandi-grievance-routing/",
+   "name": "Nandi: Open-Source Complaint Routing for Indian Languages"
+  },
+  {
+   "@type": "ListItem",
+   "position": 10,
+   "url": "https://latentailabs.github.io/bhasha-language-id/",
+   "name": "Bhasha: Word-Level Language ID for Code-Mixed Indian Text"
   }
  ]
 }
@@ -182,7 +194,7 @@
 <a class="btn primary" href="/how-chatgpt-works/"><span>Start with Ep 1</span><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
 <a class="btn ghost" href="https://www.youtube.com/@LatentAILabs"><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2.5 17a24.1 24.1 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.6 49.6 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.1 24.1 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.6 49.6 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/><path d="m10 15 5-3-5-3z"/></svg><span>Watch on YouTube</span></a>
 </div>
-<ul class="chips readout" aria-label="Key measurements"><li><span class="v">6</span><span class="l">episodes</span></li><li><span class="v">96 GB</span><span class="l">RTX PRO 6000 Blackwell</span></li><li><span class="v">2</span><span class="l">open Indic models</span></li></ul>
+<ul class="chips readout" aria-label="Key measurements"><li><span class="v">6</span><span class="l">episodes</span></li><li><span class="v">96 GB</span><span class="l">RTX PRO 6000 Blackwell</span></li><li><span class="v">4</span><span class="l">open Indic models</span></li></ul>
 </div>
 </section>
 <section class="section" id="series" aria-labelledby="series-how-ai-works">
@@ -267,7 +279,7 @@
 <div class="sec-head">
 <p class="eyebrow">Open models · Hugging Face</p>
 <h2 id="series-indic-models">Open models for Indian languages</h2>
-<p>Two Apache-2.0 models for Indian-language text, released on Hugging Face: Yama, a zero-shot classifier, and Chitragupta, a personal-data detector and redactor.</p>
+<p>Four Apache-2.0 models for Indian-language text, released on Hugging Face: Yama, a zero-shot classifier; Chitragupta, a personal-data detector and redactor; Nandi, a complaint router; and Bhasha, a word-level language identifier.</p>
 </div>
 <ul class="grid two">
 <li class="card model">
@@ -286,6 +298,24 @@
 <p class="hook">Chitragupta, an Apache-2.0 model that finds and masks Aadhaar, PAN, UPI and other personal data in 13 languages, paired with Yama.</p>
 <ul class="chips" aria-label="Key measurements"><li><span class="v">18</span><span class="l">PII types</span></li><li><span class="v">13</span><span class="l">languages</span></li><li><span class="v">0.959</span><span class="l">exact-span F1</span></li></ul>
 <div class="btns"><a class="btn small" href="/chitragupta-pii/">Summary</a><a class="btn small ghost" href="https://huggingface.co/arunp0/chitragupta-pii-indic"><svg class="i" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg><span>Hugging Face</span></a><a class="btn small ghost" href="https://pub.towardsai.net/yama-judges-chitragupta-keeps-the-records-open-source-ai-for-indian-languages-b7f8bf3b7576"><svg class="i" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg><span>Full article</span></a></div>
+</div>
+</li>
+<li class="card model">
+<div class="body">
+<p class="eyebrow">MODEL 03 · Apache-2.0</p>
+<h3 class="card-title"><a href="/nandi-grievance-routing/">Nandi: Open-Source Complaint Routing for Indian Languages</a></h3>
+<p class="hook">Nandi, an Apache-2.0 model that routes complaints in 13 Indian languages to one of 53 regulator-based categories, and what real posts revealed.</p>
+<ul class="chips" aria-label="Key measurements"><li><span class="v">53</span><span class="l">categories</span></li><li><span class="v">13</span><span class="l">languages</span></li><li><span class="v">62.5%</span><span class="l">accuracy, real posts</span></li></ul>
+<div class="btns"><a class="btn small" href="/nandi-grievance-routing/">Summary</a><a class="btn small ghost" href="https://huggingface.co/arunp0/nandi-grievance-indic"><svg class="i" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg><span>Hugging Face</span></a><a class="btn small ghost" href="https://pub.towardsai.net/nandi-carries-every-complaint-to-the-right-desk-open-source-ai-for-indian-languages-743b55c912a2"><svg class="i" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg><span>Full article</span></a></div>
+</div>
+</li>
+<li class="card model">
+<div class="body">
+<p class="eyebrow">MODEL 04 · Apache-2.0</p>
+<h3 class="card-title"><a href="/bhasha-language-id/">Bhasha: Word-Level Language ID for Code-Mixed Indian Text</a></h3>
+<p class="hook">Bhasha, an Apache-2.0 model that labels the language of every word in Hinglish, Tanglish and Kanglish, and why human labels exposed its Tamil gap.</p>
+<ul class="chips" aria-label="Key measurements"><li><span class="v">278M</span><span class="l">parameters</span></li><li><span class="v">11</span><span class="l">Indian languages + English</span></li><li><span class="v">1.65M</span><span class="l">code-built training rows</span></li></ul>
+<div class="btns"><a class="btn small" href="/bhasha-language-id/">Summary</a><a class="btn small ghost" href="https://huggingface.co/arunp0/bhasha-lid-indic"><svg class="i" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg><span>Hugging Face</span></a><a class="btn small ghost" href="https://pub.towardsai.net/my-model-thought-tamil-was-telugu-open-source-language-id-for-hinglish-tanglish-and-kanglish-604547310cd0"><svg class="i" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg><span>Full article</span></a></div>
 </div>
 </li>
 </ul>

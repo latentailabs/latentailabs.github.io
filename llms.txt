@@ -17,6 +17,8 @@ This site hosts short original summaries and FAQs. The full articles are the can
 
 - [Yama: Try a Bigger Encoder Before a New Architecture](https://latentailabs.github.io/yama-bigger-encoder/): Building Yama, a 586M zero-shot classifier for 11 Indian languages and Hinglish, and why the encoder swap beat every clever idea.
 - [Chitragupta: Open-Source PII Redaction for India](https://latentailabs.github.io/chitragupta-pii/): Chitragupta, an Apache-2.0 model that finds and masks Aadhaar, PAN, UPI and other personal data in 13 languages, paired with Yama.
+- [Nandi: Open-Source Complaint Routing for Indian Languages](https://latentailabs.github.io/nandi-grievance-routing/): Nandi, an Apache-2.0 model that routes complaints in 13 Indian languages to one of 53 regulator-based categories, and what real posts revealed.
+- [Bhasha: Word-Level Language ID for Code-Mixed Indian Text](https://latentailabs.github.io/bhasha-language-id/): Bhasha, an Apache-2.0 model that labels the language of every word in Hinglish, Tanglish and Kanglish, and why human labels exposed its Tamil gap.
 
 ## Full articles (canonical, Medium / Towards AI)
 
@@ -28,6 +30,8 @@ This site hosts short original summaries and FAQs. The full articles are the can
 - [How AI Generates Video: Inside Sora and Wan2.1 on a Real GPU](https://pub.towardsai.net/how-ai-generates-video-inside-sora-and-wan2-1-on-a-real-gpu-1377cce7d39c): full article, published 2026-10-28.
 - [Before You Invent a New Architecture, Try a Bigger Encoder](https://pub.towardsai.net/before-you-invent-a-new-architecture-try-a-bigger-encoder-8f2b39fc50a8): full article, published 2026-10-22.
 - [Yama Judges, Chitragupta Keeps the Records: Open-Source AI for Indian Languages](https://pub.towardsai.net/yama-judges-chitragupta-keeps-the-records-open-source-ai-for-indian-languages-b7f8bf3b7576): full article, published 2026-10-24.
+- [Nandi Carries Every Complaint to the Right Desk: Open-Source AI for Indian Languages](https://pub.towardsai.net/nandi-carries-every-complaint-to-the-right-desk-open-source-ai-for-indian-languages-743b55c912a2): full article, published 2026-10-30.
+- [My Model Thought Tamil Was Telugu: Open-Source Language ID for Hinglish, Tanglish and Kanglish](https://pub.towardsai.net/my-model-thought-tamil-was-telugu-open-source-language-id-for-hinglish-tanglish-and-kanglish-604547310cd0): full article, published 2026-10-31.
 
 ## Videos
 
@@ -43,7 +47,7 @@ This site hosts short original summaries and FAQs. The full articles are the can
 - [About Arun Prabhakaran](https://latentailabs.github.io/about/): author page with profile links.
 - [YouTube @LatentAILabs](https://www.youtube.com/@LatentAILabs): all videos.
 - [Medium @arunp0](https://medium.com/@arunp0): all articles.
-- [Hugging Face arunp0](https://huggingface.co/arunp0): open models (yama-indic, chitragupta-pii-indic).
+- [Hugging Face arunp0](https://huggingface.co/arunp0): open models (yama-indic, chitragupta-pii-indic, nandi-grievance-indic, bhasha-lid-indic).
 
 ## Optional
 

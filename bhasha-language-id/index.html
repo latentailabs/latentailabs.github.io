@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="google-site-verification" content="z2GgSNcEbJMxnxbXFNmq_I1h15v5GLVRt9AGPBNkRJo">
+<meta name="msvalidate.01" content="A07B0FDD1116A7D50360329D6832D23B">
+<title>Bhasha: Word-Level Language ID for Code-Mixed Indian Text</title>
+<meta name="description" content="Which language is each word in Hinglish or Tanglish? Bhasha is a free open-source model that tags every word of code-mixed Indian text. Runs offline.">
+<meta name="author" content="Arun Prabhakaran">
+<link rel="canonical" href="https://latentailabs.github.io/bhasha-language-id/">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta property="og:site_name" content="Latent AI Labs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Bhasha: Word-Level Language ID for Code-Mixed Indian Text">
+<meta property="og:description" content="Which language is each word in Hinglish or Tanglish? Bhasha is a free open-source model that tags every word of code-mixed Indian text. Runs offline.">
+<meta property="og:url" content="https://latentailabs.github.io/bhasha-language-id/">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Bhasha: Word-Level Language ID for Code-Mixed Indian Text">
+<meta name="twitter:description" content="Which language is each word in Hinglish or Tanglish? Bhasha is a free open-source model that tags every word of code-mixed Indian text. Runs offline.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#FAFAFA" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0F172A" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
+<link rel="stylesheet" href="/style.css">
+<link rel="alternate" type="text/plain" title="llms.txt" href="/llms.txt">
+<script>(function(){try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<meta property="article:author" content="https://latentailabs.github.io/about/">
+<meta property="article:published_time" content="2026-10-31">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "TechArticle",
+ "@id": "https://latentailabs.github.io/bhasha-language-id/#article",
+ "headline": "Bhasha: Word-Level Language ID for Code-Mixed Indian Text",
+ "alternativeHeadline": "My Model Thought Tamil Was Telugu: Open-Source Language ID for Hinglish, Tanglish and Kanglish",
+ "description": "Which language is each word in Hinglish or Tanglish? Bhasha is a free open-source model that tags every word of code-mixed Indian text. Runs offline.",
+ "abstract": "Bhasha is a free, 278M-parameter, Apache-2.0 model that tags the language of every word in code-mixed Indian text such as Hinglish, Tanglish and Kanglish, in Roman or native script. Trained only on code-built data, it reaches 0.84 to 0.95 on human-labelled Kannada and Malayalam sets, but Tamil scored 0.72 because it confused spoken Tamil with Telugu.",
+ "url": "https://latentailabs.github.io/bhasha-language-id/",
+ "mainEntityOfPage": "https://latentailabs.github.io/bhasha-language-id/",
+ "inLanguage": "en",
+ "datePublished": "2026-10-31",
+ "dateModified": "2026-10-31",
+ "author": {
+  "@type": "Person",
+  "@id": "https://latentailabs.github.io/about/#person",
+  "name": "Arun Prabhakaran",
+  "url": "https://latentailabs.github.io/about/"
+ },
+ "publisher": {
+  "@type": "Organization",
+  "@id": "https://latentailabs.github.io/#organization",
+  "name": "Latent AI Labs",
+  "url": "https://latentailabs.github.io/"
+ },
+ "keywords": "language identification, code-mixing, Hinglish, Tanglish, Kanglish, Manglish, romanised Indian languages, XLM-RoBERTa, Bhasha",
+ "isPartOf": {
+  "@type": "CreativeWorkSeries",
+  "name": "Open models for Indian languages",
+  "url": "https://latentailabs.github.io/#series-indic-models"
+ },
+ "isBasedOn": {
+  "@type": "Article",
+  "headline": "My Model Thought Tamil Was Telugu: Open-Source Language ID for Hinglish, Tanglish and Kanglish",
+  "url": "https://pub.towardsai.net/my-model-thought-tamil-was-telugu-open-source-language-id-for-hinglish-tanglish-and-kanglish-604547310cd0",
+  "datePublished": "2026-10-31",
+  "author": {
+   "@type": "Person",
+   "@id": "https://latentailabs.github.io/about/#person",
+   "name": "Arun Prabhakaran",
+   "url": "https://latentailabs.github.io/about/"
+  },
+  "publisher": {
+   "@type": "Organization",
+   "name": "Towards AI"
+  }
+ },
+ "citation": "https://pub.towardsai.net/my-model-thought-tamil-was-telugu-open-source-language-id-for-hinglish-tanglish-and-kanglish-604547310cd0"
+}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "@id": "https://latentailabs.github.io/bhasha-language-id/#faq",
+ "url": "https://latentailabs.github.io/bhasha-language-id/",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "How do I detect the language of each word in a Hinglish or Tanglish sentence?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Use a word-level language identification model rather than a sentence-level one. Bhasha, released under Apache-2.0, takes a message and returns a language tag for every word, along with the main language, the script type, whether the text is mixed and each language's share. Where romanised Hindi and Urdu look identical it answers hi/ur instead of guessing, and a langs option restricts output to a known language pair."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How is word-level language ID different from GlotLID or IndicLID?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "GlotLID and IndicLID assign a single language to a whole piece of text, which is fine for routing messages but loses detail when one sentence switches between, say, Kannada and English. Bhasha labels each word instead. According to the article it also finds the main language of real code-mixed comments better than GlotLID, 0.71 against 0.53 macro-F1, though GlotLID wins on whole romanised sentences written in one language."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Why does a language ID model confuse Tamil with Telugu?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "In Bhasha's case, the training Tamil came only from news and web writing, which differs sharply from the spoken Tamil people type in comments. Faced with unfamiliar colloquial forms, the model reached for the nearest South Indian language it knew. On human-labelled Tamil words, 36.4% came out as Telugu. Blocking Telugu mostly shifted the errors to English, which pointed to a data problem rather than a decoding one."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Is there an open-source language identification model for Kannada and Malayalam code-mixed text?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Yes. Bhasha scores 0.84 to 0.90 macro-F1 on human-labelled Kannada sets and 0.91 to 0.95 on Malayalam ones, and the author says it is the only model he found above 0.84 on all of them. It is not top everywhere: distilka, the 2022 shared-task Kannada model, does better on a test from its own series, 0.954 versus 0.903."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Can you train a code-mixed language ID model without hand-labelled data?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Bhasha shows it can work, with a catch. Code took real native-script sentences, converted them to Roman spellings weighted by how often each appears online, inserted English spans of one to six words and recorded every word's language. The labels are therefore set by the generator, not guessed. The catch is the text itself: news-style sentences were enough for Malayalam and Kannada but not for colloquial Tamil."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "What are Bhasha's limitations?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Spoken Tamil remains weak in the first release, so pass langs with the Tamil code and expect mistakes. Telugu, Marathi, Punjabi, Urdu and Odia lack a real code-mixed test, and Gujarati scored only 0.678 in mixed text. GlotLID is better on single-language romanised sentences, names are weak at 0.23 to 0.56 F1, and very short messages give it too little context."
+   }
+  }
+ ]
+}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "BreadcrumbList",
+ "itemListElement": [
+  {
+   "@type": "ListItem",
+   "position": 1,
+   "name": "Home",
+   "item": "https://latentailabs.github.io/"
+  },
+  {
+   "@type": "ListItem",
+   "position": 2,
+   "name": "Open models for Indian languages",
+   "item": "https://latentailabs.github.io/#series-indic-models"
+  },
+  {
+   "@type": "ListItem",
+   "position": 3,
+   "name": "Bhasha",
+   "item": "https://latentailabs.github.io/bhasha-language-id/"
+  }
+ ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+<div class="bar">
+<a class="brand" href="/" aria-label="Latent AI Labs home"><svg class="mark" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2 22 12 12 22 2 12Z" fill="currentColor"/><path d="M12 7.5 16.5 12 12 16.5 7.5 12Z" fill="var(--bg)"/></svg><span>Latent AI Labs</span></a>
+<nav class="nav" aria-label="Main">
+<a href="/#series">Series</a>
+<a href="/about/">About</a>
+<a href="https://www.youtube.com/@LatentAILabs" rel="me">YouTube</a>
+<a href="https://medium.com/@arunp0" rel="me">Medium</a>
+</nav>
+<button class="theme-toggle" type="button" aria-label="Toggle dark mode" aria-pressed="false"><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M6.3 17.7l-1.4 1.4M19.1 4.9l-1.4 1.4"/></svg></button>
+</div>
+</header>
+<main id="main">
+<div class="container article-wrap">
+<nav class="crumbs mono" aria-label="Breadcrumb"><ol>
+<li><a href="/">Home</a></li>
+<li><a href="/#series-indic-models">Open models for Indian languages</a></li>
+<li aria-current="page">Bhasha</li>
+</ol></nav>
+<article class="prose">
+<header class="art-head">
+<p class="eyebrow">MODEL 04 · Open models for Indian languages</p>
+<h1>My Model Thought Tamil Was Telugu: Open-Source Language ID for Hinglish, Tanglish and Kanglish</h1>
+<p class="dek">Bhasha, an Apache-2.0 model that labels the language of every word in Hinglish, Tanglish and Kanglish, and why human labels exposed its Tamil gap.</p>
+<p class="meta mono">By <a href="/about/">Arun Prabhakaran</a> · Originally published 31 Oct 2026 in Towards AI · 12 min full read</p>
+</header>
+<section class="tldr" aria-labelledby="tldr-h">
+<h2 id="tldr-h" class="eyebrow">TL;DR</h2>
+<p>Bhasha is a free, 278M-parameter, Apache-2.0 model that tags the language of every word in code-mixed Indian text such as Hinglish, Tanglish and Kanglish, in Roman or native script. Trained only on code-built data, it reaches 0.84 to 0.95 on human-labelled Kannada and Malayalam sets, but Tamil scored 0.72 because it confused spoken Tamil with Telugu.</p>
+</section>
+<ul class="chips readout" aria-label="Key measurements"><li><span class="v">278M</span><span class="l">parameters</span></li><li><span class="v">11</span><span class="l">Indian languages + English</span></li><li><span class="v">1.65M</span><span class="l">code-built training rows</span></li><li><span class="v">0.84–0.95</span><span class="l">Kannada and Malayalam, human labels</span></li><li><span class="v">0.72</span><span class="l">Tamil, human labels</span></li></ul>
+<section aria-labelledby="sum">
+<h2 id="sum">Summary</h2>
+<p>This article presents Bhasha (arunp0/bhasha-lid-indic), a 278M-parameter, Apache-2.0 model that gives a language label to each word of a message rather than one label for the whole text. It covers English and 11 Indian languages, plus tags for names and other tokens, and reads Roman letters, native scripts or both in one sentence. That matters for comments like Tanglish film reviews, where half the words are Tamil typed in Latin script. The author could not find any licensed model that tags words in Roman-script Tamil, Malayalam or Kannada blended with English, so he built one.</p>
+<p>Every training row was generated by code: native IndicCorp sentences were romanised the way people actually spell, English spans were spliced in, and noise such as emoji and stretched words was added, giving 1.65 million rows with no hand labels and no LLM-written text.</p>
+<p>On 425 real YouTube comments with LLM labels, Bhasha scored 0.87 to 0.89 macro-F1, well above released Hinglish models. Human-labelled sets then held up for Kannada and Malayalam but showed Tamil at 0.723, and counting its errors revealed that 36.4% of Tamil words were tagged Telugu. The likely cause is that it learned only news-style Tamil. A language-pair hint helps slightly, and a v2 trained on real comments lifts Tamil to 0.94.</p>
+<p class="note">This page is a short summary written for this site. Every figure, table, code sample and reference is in the <a href="https://pub.towardsai.net/my-model-thought-tamil-was-telugu-open-source-language-id-for-hinglish-tanglish-and-kanglish-604547310cd0">original article on Towards AI</a>.</p>
+</section>
+<section class="faq" aria-labelledby="faq-h">
+<h2 id="faq-h">Questions this article answers</h2>
+<details open><summary><span>How do I detect the language of each word in a Hinglish or Tanglish sentence?</span><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg></summary><p>Use a word-level language identification model rather than a sentence-level one. Bhasha, released under Apache-2.0, takes a message and returns a language tag for every word, along with the main language, the script type, whether the text is mixed and each language&#x27;s share. Where romanised Hindi and Urdu look identical it answers hi/ur instead of guessing, and a langs option restricts output to a known language pair.</p></details>
+<details><summary><span>How is word-level language ID different from GlotLID or IndicLID?</span><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg></summary><p>GlotLID and IndicLID assign a single language to a whole piece of text, which is fine for routing messages but loses detail when one sentence switches between, say, Kannada and English. Bhasha labels each word instead. According to the article it also finds the main language of real code-mixed comments better than GlotLID, 0.71 against 0.53 macro-F1, though GlotLID wins on whole romanised sentences written in one language.</p></details>
+<details><summary><span>Why does a language ID model confuse Tamil with Telugu?</span><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg></summary><p>In Bhasha&#x27;s case, the training Tamil came only from news and web writing, which differs sharply from the spoken Tamil people type in comments. Faced with unfamiliar colloquial forms, the model reached for the nearest South Indian language it knew. On human-labelled Tamil words, 36.4% came out as Telugu. Blocking Telugu mostly shifted the errors to English, which pointed to a data problem rather than a decoding one.</p></details>
+<details><summary><span>Is there an open-source language identification model for Kannada and Malayalam code-mixed text?</span><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg></summary><p>Yes. Bhasha scores 0.84 to 0.90 macro-F1 on human-labelled Kannada sets and 0.91 to 0.95 on Malayalam ones, and the author says it is the only model he found above 0.84 on all of them. It is not top everywhere: distilka, the 2022 shared-task Kannada model, does better on a test from its own series, 0.954 versus 0.903.</p></details>
+<details><summary><span>Can you train a code-mixed language ID model without hand-labelled data?</span><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg></summary><p>Bhasha shows it can work, with a catch. Code took real native-script sentences, converted them to Roman spellings weighted by how often each appears online, inserted English spans of one to six words and recorded every word&#x27;s language. The labels are therefore set by the generator, not guessed. The catch is the text itself: news-style sentences were enough for Malayalam and Kannada but not for colloquial Tamil.</p></details>
+<details><summary><span>What are Bhasha&#x27;s limitations?</span><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg></summary><p>Spoken Tamil remains weak in the first release, so pass langs with the Tamil code and expect mistakes. Telugu, Marathi, Punjabi, Urdu and Odia lack a real code-mixed test, and Gujarati scored only 0.678 in mixed text. GlotLID is better on single-language romanised sentences, names are weak at 0.23 to 0.56 F1, and very short messages give it too little context.</p></details>
+</section>
+<aside class="cta-card" aria-label="Read the original article">
+<p class="eyebrow">The full story</p>
+<p class="cta-title">My Model Thought Tamil Was Telugu: Open-Source Language ID for Hinglish, Tanglish and Kanglish</p>
+<p>The complete walkthrough with all measurements, figures and sources. About 12 minutes.</p>
+<div class="btns"><a class="btn primary" href="https://pub.towardsai.net/my-model-thought-tamil-was-telugu-open-source-language-id-for-hinglish-tanglish-and-kanglish-604547310cd0"><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg><span>Read the full story on Medium</span><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a><a class="btn ghost" href="https://huggingface.co/arunp0/bhasha-lid-indic"><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg><span>Bhasha on Hugging Face</span></a><a class="btn ghost" href="https://huggingface.co/arunp0/nandi-grievance-indic"><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg><span>Nandi on Hugging Face</span></a></div>
+</aside>
+</article>
+<nav class="pager" aria-label="Previous and next">
+<a class="prev" href="/nandi-grievance-routing/"><span class="eyebrow">← Previous · MODEL 03</span>Nandi: Open-Source Complaint Routing for Indian Languages</a>
+</nav>
+<section class="more" aria-labelledby="more-h"><h2 id="more-h" class="eyebrow">More in Open models for Indian languages</h2><ul><li><a href="/yama-bigger-encoder/"><span class="mono">MODEL 01</span>Yama: Try a Bigger Encoder Before a New Architecture</a></li><li><a href="/chitragupta-pii/"><span class="mono">MODEL 02</span>Chitragupta: Open-Source PII Redaction for India</a></li><li><a href="/nandi-grievance-routing/"><span class="mono">MODEL 03</span>Nandi: Open-Source Complaint Routing for Indian Languages</a></li></ul></section>
+</div>
+</main>
+<footer class="site-footer">
+<div class="container foot">
+<div>
+<a class="brand" href="/"><svg class="mark" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2 22 12 12 22 2 12Z" fill="currentColor"/><path d="M12 7.5 16.5 12 12 16.5 7.5 12Z" fill="var(--bg)"/></svg><span>Latent AI Labs</span></a>
+<p class="disamb">Latent AI Labs is Arun Prabhakaran's independent AI-explainer channel. It is a one-person project and is not affiliated with Latent AI, Inc. or Latent Labs.</p>
+</div>
+<ul class="same" aria-label="Profiles">
+<li><a href="https://medium.com/@arunp0" rel="me">Medium</a></li>
+<li><a href="https://www.youtube.com/@LatentAILabs" rel="me">YouTube</a></li>
+<li><a href="https://huggingface.co/arunp0" rel="me">Hugging Face</a></li>
+<li><a href="https://github.com/arunp0" rel="me">GitHub</a></li>
+<li><a href="https://github.com/latentailabs">GitHub (org)</a></li>
+<li><a href="https://www.linkedin.com/in/arunp0/" rel="me">LinkedIn</a></li>
+<li><a href="/llms.txt">llms.txt</a></li>
+<li><a href="/sitemap.xml">Sitemap</a></li>
+</ul>
+<p class="copy mono">© 2026 Arun Prabhakaran · Full articles are published on Medium / Towards AI.</p>
+</div>
+</footer>
+<script>(function(){
+var b=document.querySelector('.theme-toggle');
+if(b){var r0=document.documentElement,c0=r0.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');b.setAttribute('aria-pressed',c0==='dark'?'true':'false');
+b.addEventListener('click',function(){
+var r=document.documentElement,cur=r.getAttribute('data-theme');
+if(!cur){cur=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+var n=cur==='dark'?'light':'dark';r.setAttribute('data-theme',n);
+b.setAttribute('aria-pressed',n==='dark'?'true':'false');
+try{localStorage.setItem('theme',n);}catch(e){}});}
+document.querySelectorAll('a.yt[data-yt]').forEach(function(a){
+a.addEventListener('click',function(ev){
+if(ev.metaKey||ev.ctrlKey||ev.shiftKey||ev.button!==0)return;ev.preventDefault();
+var f=document.createElement('iframe');
+f.src='https://www.youtube-nocookie.com/embed/'+a.getAttribute('data-yt')+'?autoplay=1&rel=0';
+f.title=a.getAttribute('data-title')||'YouTube video';
+f.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+f.allowFullscreen=true;f.referrerPolicy='strict-origin-when-cross-origin';
+a.replaceWith(f);f.focus();});});
+})();</script>
+</body>
+</html>

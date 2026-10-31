@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://latentailabs.github.io/</loc><lastmod>2026-10-29</lastmod></url>
-  <url><loc>https://latentailabs.github.io/about/</loc><lastmod>2026-10-29</lastmod></url>
-  <url><loc>https://latentailabs.github.io/how-chatgpt-works/</loc><lastmod>2026-10-29</lastmod></url>
-  <url><loc>https://latentailabs.github.io/thinking-models/</loc><lastmod>2026-10-29</lastmod></url>
-  <url><loc>https://latentailabs.github.io/long-context-kv-cache/</loc><lastmod>2026-10-29</lastmod></url>
-  <url><loc>https://latentailabs.github.io/how-ai-generates-images/</loc><lastmod>2026-10-29</lastmod></url>
-  <url><loc>https://latentailabs.github.io/how-vlms-see-images/</loc><lastmod>2026-10-29</lastmod></url>
-  <url><loc>https://latentailabs.github.io/how-ai-generates-video/</loc><lastmod>2026-10-29</lastmod></url>
-  <url><loc>https://latentailabs.github.io/yama-bigger-encoder/</loc><lastmod>2026-10-29</lastmod></url>
-  <url><loc>https://latentailabs.github.io/chitragupta-pii/</loc><lastmod>2026-10-29</lastmod></url>
+  <url><loc>https://latentailabs.github.io/</loc><lastmod>2026-10-31</lastmod></url>
+  <url><loc>https://latentailabs.github.io/about/</loc><lastmod>2026-10-31</lastmod></url>
+  <url><loc>https://latentailabs.github.io/how-chatgpt-works/</loc><lastmod>2026-10-31</lastmod></url>
+  <url><loc>https://latentailabs.github.io/thinking-models/</loc><lastmod>2026-10-31</lastmod></url>
+  <url><loc>https://latentailabs.github.io/long-context-kv-cache/</loc><lastmod>2026-10-31</lastmod></url>
+  <url><loc>https://latentailabs.github.io/how-ai-generates-images/</loc><lastmod>2026-10-31</lastmod></url>
+  <url><loc>https://latentailabs.github.io/how-vlms-see-images/</loc><lastmod>2026-10-31</lastmod></url>
+  <url><loc>https://latentailabs.github.io/how-ai-generates-video/</loc><lastmod>2026-10-31</lastmod></url>
+  <url><loc>https://latentailabs.github.io/yama-bigger-encoder/</loc><lastmod>2026-10-31</lastmod></url>
+  <url><loc>https://latentailabs.github.io/chitragupta-pii/</loc><lastmod>2026-10-31</lastmod></url>
+  <url><loc>https://latentailabs.github.io/nandi-grievance-routing/</loc><lastmod>2026-10-31</lastmod></url>
+  <url><loc>https://latentailabs.github.io/bhasha-language-id/</loc><lastmod>2026-10-31</lastmod></url>
 </urlset>

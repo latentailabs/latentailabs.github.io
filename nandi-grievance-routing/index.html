@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="google-site-verification" content="z2GgSNcEbJMxnxbXFNmq_I1h15v5GLVRt9AGPBNkRJo">
+<meta name="msvalidate.01" content="A07B0FDD1116A7D50360329D6832D23B">
+<title>Nandi: Open-Source Complaint Routing for Indian Languages</title>
+<meta name="description" content="How do you route complaints written in Hindi or Hinglish? Nandi is a free open-source model that sorts them into 53 RBI, IRDAI and CPGRAMS categories.">
+<meta name="author" content="Arun Prabhakaran">
+<link rel="canonical" href="https://latentailabs.github.io/nandi-grievance-routing/">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta property="og:site_name" content="Latent AI Labs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nandi: Open-Source Complaint Routing for Indian Languages">
+<meta property="og:description" content="How do you route complaints written in Hindi or Hinglish? Nandi is a free open-source model that sorts them into 53 RBI, IRDAI and CPGRAMS categories.">
+<meta property="og:url" content="https://latentailabs.github.io/nandi-grievance-routing/">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Nandi: Open-Source Complaint Routing for Indian Languages">
+<meta name="twitter:description" content="How do you route complaints written in Hindi or Hinglish? Nandi is a free open-source model that sorts them into 53 RBI, IRDAI and CPGRAMS categories.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#FAFAFA" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0F172A" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
+<link rel="stylesheet" href="/style.css">
+<link rel="alternate" type="text/plain" title="llms.txt" href="/llms.txt">
+<script>(function(){try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<meta property="article:author" content="https://latentailabs.github.io/about/">
+<meta property="article:published_time" content="2026-10-31">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "TechArticle",
+ "@id": "https://latentailabs.github.io/nandi-grievance-routing/#article",
+ "headline": "Nandi: Open-Source Complaint Routing for Indian Languages",
+ "alternativeHeadline": "Nandi Carries Every Complaint to the Right Desk: Open-Source AI for Indian Languages",
+ "description": "How do you route complaints written in Hindi or Hinglish? Nandi is a free open-source model that sorts them into 53 RBI, IRDAI and CPGRAMS categories.",
+ "abstract": "Nandi is a free, local, 560M-parameter model that routes complaints in 13 Indian languages to one of 53 categories drawn from RBI, IRDAI, CPGRAMS and consumer-helpline lists. It hit 92.9% on a synthetic test but 62.5% (81.3% top-3) on real public posts, slightly behind a 35B LLM, and its urgency head ships as experimental.",
+ "url": "https://latentailabs.github.io/nandi-grievance-routing/",
+ "mainEntityOfPage": "https://latentailabs.github.io/nandi-grievance-routing/",
+ "inLanguage": "en",
+ "datePublished": "2026-10-31",
+ "dateModified": "2026-10-31",
+ "author": {
+  "@type": "Person",
+  "@id": "https://latentailabs.github.io/about/#person",
+  "name": "Arun Prabhakaran",
+  "url": "https://latentailabs.github.io/about/"
+ },
+ "publisher": {
+  "@type": "Organization",
+  "@id": "https://latentailabs.github.io/#organization",
+  "name": "Latent AI Labs",
+  "url": "https://latentailabs.github.io/"
+ },
+ "keywords": "complaint classification, grievance routing, Indian languages, Hinglish, RBI, IRDAI, CPGRAMS, synthetic data, Nandi",
+ "isPartOf": {
+  "@type": "CreativeWorkSeries",
+  "name": "Open models for Indian languages",
+  "url": "https://latentailabs.github.io/#series-indic-models"
+ },
+ "isBasedOn": {
+  "@type": "Article",
+  "headline": "Nandi Carries Every Complaint to the Right Desk: Open-Source AI for Indian Languages",
+  "url": "https://pub.towardsai.net/nandi-carries-every-complaint-to-the-right-desk-open-source-ai-for-indian-languages-743b55c912a2",
+  "datePublished": "2026-10-30",
+  "author": {
+   "@type": "Person",
+   "@id": "https://latentailabs.github.io/about/#person",
+   "name": "Arun Prabhakaran",
+   "url": "https://latentailabs.github.io/about/"
+  },
+  "publisher": {
+   "@type": "Organization",
+   "name": "Towards AI"
+  }
+ },
+ "citation": "https://pub.towardsai.net/nandi-carries-every-complaint-to-the-right-desk-open-source-ai-for-indian-languages-743b55c912a2"
+}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "@id": "https://latentailabs.github.io/nandi-grievance-routing/#faq",
+ "url": "https://latentailabs.github.io/nandi-grievance-routing/",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "How do you automatically classify customer complaints written in Hindi or Hinglish?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "One option is a fine-tuned encoder such as Nandi, an Apache-2.0 model built on XLM-RoBERTa-large. You pass it the raw message and it returns a category out of 53, the three likeliest categories with probabilities, and a tentative urgency level. It handles Hinglish, Hindi, English and ten other Indian languages in native or Roman script, and it runs locally on a CPU or GPU without calling any API."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Which complaint categories does Nandi use, and where do they come from?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "The categories follow lists already published by Indian bodies: 14 banking and payments desks from RBI's ombudsman complaint form, 12 insurance types from IRDAI, 17 central government services from CPGRAMS, 4 telecom groups and 5 consumer sectors largely from the National Consumer Helpline, plus one bucket for messages that are not complaints. The author notes that the mapping is his own, not an official one."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How accurate is Nandi on real complaints compared with an LLM?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "On 443 real app reviews and forum posts it never saw, Nandi chose the correct category 62.5% of the time and ranked it in its top three 81.3% of the time. Qwen3.6-35B-A3B used zero-shot scored 66.4% and was much stronger on rare categories, with macro-F1 of 0.62 against 0.43. Nandi's advantage is size and privacy: about 60 times smaller, local, and no text leaves your servers."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Why does a model trained on synthetic data score lower on real text?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Synthetic text shares the definitions, prompt layout and tidy detail of its training data, even when another model writes the test. Nandi scored 92.9% on such a test but 62.5% on genuine posts, a drop of about 30 points. Real complaints tend to be shorter, vaguer and messier, and urgent ones rarely state their timing as clearly as generated scenarios did. The lesson is to budget for a blind real-world test."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Can Nandi detect urgent complaints reliably?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Not yet. The author set a pass bar for urgent recall before collecting the real test, and Nandi fell well short of it, catching about one urgent post in four. Leaving out loan-app harassment, the easiest kind, recall drops to roughly 0.10. The urgency head is therefore published as experimental: treat its output as a hint that a person checks, not as an automatic triage decision."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "What are Nandi's main limitations?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Its confidence scores are not calibrated, and it often reports 0.99 on wrong answers, so rely on the top three as suggestions for a human. Around one in five real non-complaints still receives a category, rare categories are weak, and real-text testing covers mostly English, Hindi and Hinglish. All real-text labels were reviewed by language models rather than people, and accuracy on redacted input has not been measured."
+   }
+  }
+ ]
+}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "BreadcrumbList",
+ "itemListElement": [
+  {
+   "@type": "ListItem",
+   "position": 1,
+   "name": "Home",
+   "item": "https://latentailabs.github.io/"
+  },
+  {
+   "@type": "ListItem",
+   "position": 2,
+   "name": "Open models for Indian languages",
+   "item": "https://latentailabs.github.io/#series-indic-models"
+  },
+  {
+   "@type": "ListItem",
+   "position": 3,
+   "name": "Nandi",
+   "item": "https://latentailabs.github.io/nandi-grievance-routing/"
+  }
+ ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+<div class="bar">
+<a class="brand" href="/" aria-label="Latent AI Labs home"><svg class="mark" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2 22 12 12 22 2 12Z" fill="currentColor"/><path d="M12 7.5 16.5 12 12 16.5 7.5 12Z" fill="var(--bg)"/></svg><span>Latent AI Labs</span></a>
+<nav class="nav" aria-label="Main">
+<a href="/#series">Series</a>
+<a href="/about/">About</a>
+<a href="https://www.youtube.com/@LatentAILabs" rel="me">YouTube</a>
+<a href="https://medium.com/@arunp0" rel="me">Medium</a>
+</nav>
+<button class="theme-toggle" type="button" aria-label="Toggle dark mode" aria-pressed="false"><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M6.3 17.7l-1.4 1.4M19.1 4.9l-1.4 1.4"/></svg></button>
+</div>
+</header>
+<main id="main">
+<div class="container article-wrap">
+<nav class="crumbs mono" aria-label="Breadcrumb"><ol>
+<li><a href="/">Home</a></li>
+<li><a href="/#series-indic-models">Open models for Indian languages</a></li>
+<li aria-current="page">Nandi</li>
+</ol></nav>
+<article class="prose">
+<header class="art-head">
+<p class="eyebrow">MODEL 03 · Open models for Indian languages</p>
+<h1>Nandi Carries Every Complaint to the Right Desk: Open-Source AI for Indian Languages</h1>
+<p class="dek">Nandi, an Apache-2.0 model that routes complaints in 13 Indian languages to one of 53 regulator-based categories, and what real posts revealed.</p>
+<p class="meta mono">By <a href="/about/">Arun Prabhakaran</a> · Originally published 30 Oct 2026 in Towards AI · 14 min full read</p>
+</header>
+<section class="tldr" aria-labelledby="tldr-h">
+<h2 id="tldr-h" class="eyebrow">TL;DR</h2>
+<p>Nandi is a free, local, 560M-parameter model that routes complaints in 13 Indian languages to one of 53 categories drawn from RBI, IRDAI, CPGRAMS and consumer-helpline lists. It hit 92.9% on a synthetic test but 62.5% (81.3% top-3) on real public posts, slightly behind a 35B LLM, and its urgency head ships as experimental.</p>
+</section>
+<ul class="chips readout" aria-label="Key measurements"><li><span class="v">53</span><span class="l">categories</span></li><li><span class="v">13</span><span class="l">languages</span></li><li><span class="v">62.5%</span><span class="l">accuracy, real posts</span></li><li><span class="v">81.3%</span><span class="l">top-3, real posts</span></li><li><span class="v">560M</span><span class="l">parameters</span></li></ul>
+<section aria-labelledby="sum">
+<h2 id="sum">Summary</h2>
+<p>This article introduces Nandi (arunp0/nandi-grievance-indic), a 560M-parameter, Apache-2.0 model that reads a complaint in Hindi, Hinglish, English or ten more Indian languages and suggests where it should go. It outputs one of 53 categories, its three best guesses with probabilities, and a P1/P2/P3 urgency hint. The categories are borrowed from published complaint lists: RBI for banks, IRDAI for insurers, CPGRAMS for central government services, plus telecom and the National Consumer Helpline. Named after the bull at Shiva&#x27;s gate who carries wishes onward, it only routes; it never judges a complaint.</p>
+<p>Training used no real complaints at all. Gemma 4 and Qwen3.6 wrote and cross-checked 116,199 synthetic messages, keeping only texts where the labellers agreed.</p>
+<p>The heart of the piece is a gap. On a synthetic test written by a different model, Nandi reached 92.9% accuracy and beat a 35B LLM. On 443 real public posts gathered after the model was frozen, it fell to 62.5%, with the right answer in its top three 81.3% of the time; Qwen3.6 zero-shot reached 66.4% and handled rare categories far better. Yama, a generalist of similar size, managed 0.366.</p>
+<p>Urgency missed a rule fixed in advance: it finds roughly one real urgent post in four, so it ships as experimental. Two retrains that cut false alarms began discarding genuine complaints, so the earlier v5b was kept.</p>
+<p class="note">This page is a short summary written for this site. Every figure, table, code sample and reference is in the <a href="https://pub.towardsai.net/nandi-carries-every-complaint-to-the-right-desk-open-source-ai-for-indian-languages-743b55c912a2">original article on Towards AI</a>.</p>
+</section>
+<section class="faq" aria-labelledby="faq-h">
+<h2 id="faq-h">Questions this article answers</h2>
+<details open><summary><span>How do you automatically classify customer complaints written in Hindi or Hinglish?</span><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg></summary><p>One option is a fine-tuned encoder such as Nandi, an Apache-2.0 model built on XLM-RoBERTa-large. You pass it the raw message and it returns a category out of 53, the three likeliest categories with probabilities, and a tentative urgency level. It handles Hinglish, Hindi, English and ten other Indian languages in native or Roman script, and it runs locally on a CPU or GPU without calling any API.</p></details>
+<details><summary><span>Which complaint categories does Nandi use, and where do they come from?</span><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg></summary><p>The categories follow lists already published by Indian bodies: 14 banking and payments desks from RBI&#x27;s ombudsman complaint form, 12 insurance types from IRDAI, 17 central government services from CPGRAMS, 4 telecom groups and 5 consumer sectors largely from the National Consumer Helpline, plus one bucket for messages that are not complaints. The author notes that the mapping is his own, not an official one.</p></details>
+<details><summary><span>How accurate is Nandi on real complaints compared with an LLM?</span><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg></summary><p>On 443 real app reviews and forum posts it never saw, Nandi chose the correct category 62.5% of the time and ranked it in its top three 81.3% of the time. Qwen3.6-35B-A3B used zero-shot scored 66.4% and was much stronger on rare categories, with macro-F1 of 0.62 against 0.43. Nandi&#x27;s advantage is size and privacy: about 60 times smaller, local, and no text leaves your servers.</p></details>
+<details><summary><span>Why does a model trained on synthetic data score lower on real text?</span><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg></summary><p>Synthetic text shares the definitions, prompt layout and tidy detail of its training data, even when another model writes the test. Nandi scored 92.9% on such a test but 62.5% on genuine posts, a drop of about 30 points. Real complaints tend to be shorter, vaguer and messier, and urgent ones rarely state their timing as clearly as generated scenarios did. The lesson is to budget for a blind real-world test.</p></details>
+<details><summary><span>Can Nandi detect urgent complaints reliably?</span><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg></summary><p>Not yet. The author set a pass bar for urgent recall before collecting the real test, and Nandi fell well short of it, catching about one urgent post in four. Leaving out loan-app harassment, the easiest kind, recall drops to roughly 0.10. The urgency head is therefore published as experimental: treat its output as a hint that a person checks, not as an automatic triage decision.</p></details>
+<details><summary><span>What are Nandi&#x27;s main limitations?</span><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg></summary><p>Its confidence scores are not calibrated, and it often reports 0.99 on wrong answers, so rely on the top three as suggestions for a human. Around one in five real non-complaints still receives a category, rare categories are weak, and real-text testing covers mostly English, Hindi and Hinglish. All real-text labels were reviewed by language models rather than people, and accuracy on redacted input has not been measured.</p></details>
+</section>
+<aside class="cta-card" aria-label="Read the original article">
+<p class="eyebrow">The full story</p>
+<p class="cta-title">Nandi Carries Every Complaint to the Right Desk: Open-Source AI for Indian Languages</p>
+<p>The complete walkthrough with all measurements, figures and sources. About 14 minutes.</p>
+<div class="btns"><a class="btn primary" href="https://pub.towardsai.net/nandi-carries-every-complaint-to-the-right-desk-open-source-ai-for-indian-languages-743b55c912a2"><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg><span>Read the full story on Medium</span><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a><a class="btn ghost" href="https://huggingface.co/arunp0/nandi-grievance-indic"><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg><span>Nandi on Hugging Face</span></a><a class="btn ghost" href="https://huggingface.co/arunp0/chitragupta-pii-indic"><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg><span>Chitragupta on Hugging Face</span></a><a class="btn ghost" href="https://huggingface.co/arunp0/yama-indic"><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg><span>Yama on Hugging Face</span></a></div>
+</aside>
+</article>
+<nav class="pager" aria-label="Previous and next">
+<a class="prev" href="/chitragupta-pii/"><span class="eyebrow">← Previous · MODEL 02</span>Chitragupta: Open-Source PII Redaction for India</a>
+<a class="next" href="/bhasha-language-id/"><span class="eyebrow">Next · MODEL 04 →</span>Bhasha: Word-Level Language ID for Code-Mixed Indian Text</a>
+</nav>
+<section class="more" aria-labelledby="more-h"><h2 id="more-h" class="eyebrow">More in Open models for Indian languages</h2><ul><li><a href="/yama-bigger-encoder/"><span class="mono">MODEL 01</span>Yama: Try a Bigger Encoder Before a New Architecture</a></li><li><a href="/chitragupta-pii/"><span class="mono">MODEL 02</span>Chitragupta: Open-Source PII Redaction for India</a></li><li><a href="/bhasha-language-id/"><span class="mono">MODEL 04</span>Bhasha: Word-Level Language ID for Code-Mixed Indian Text</a></li></ul></section>
+</div>
+</main>
+<footer class="site-footer">
+<div class="container foot">
+<div>
+<a class="brand" href="/"><svg class="mark" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2 22 12 12 22 2 12Z" fill="currentColor"/><path d="M12 7.5 16.5 12 12 16.5 7.5 12Z" fill="var(--bg)"/></svg><span>Latent AI Labs</span></a>
+<p class="disamb">Latent AI Labs is Arun Prabhakaran's independent AI-explainer channel. It is a one-person project and is not affiliated with Latent AI, Inc. or Latent Labs.</p>
+</div>
+<ul class="same" aria-label="Profiles">
+<li><a href="https://medium.com/@arunp0" rel="me">Medium</a></li>
+<li><a href="https://www.youtube.com/@LatentAILabs" rel="me">YouTube</a></li>
+<li><a href="https://huggingface.co/arunp0" rel="me">Hugging Face</a></li>
+<li><a href="https://github.com/arunp0" rel="me">GitHub</a></li>
+<li><a href="https://github.com/latentailabs">GitHub (org)</a></li>
+<li><a href="https://www.linkedin.com/in/arunp0/" rel="me">LinkedIn</a></li>
+<li><a href="/llms.txt">llms.txt</a></li>
+<li><a href="/sitemap.xml">Sitemap</a></li>
+</ul>
+<p class="copy mono">© 2026 Arun Prabhakaran · Full articles are published on Medium / Towards AI.</p>
+</div>
+</footer>
+<script>(function(){
+var b=document.querySelector('.theme-toggle');
+if(b){var r0=document.documentElement,c0=r0.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');b.setAttribute('aria-pressed',c0==='dark'?'true':'false');
+b.addEventListener('click',function(){
+var r=document.documentElement,cur=r.getAttribute('data-theme');
+if(!cur){cur=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+var n=cur==='dark'?'light':'dark';r.setAttribute('data-theme',n);
+b.setAttribute('aria-pressed',n==='dark'?'true':'false');
+try{localStorage.setItem('theme',n);}catch(e){}});}
+document.querySelectorAll('a.yt[data-yt]').forEach(function(a){
+a.addEventListener('click',function(ev){
+if(ev.metaKey||ev.ctrlKey||ev.shiftKey||ev.button!==0)return;ev.preventDefault();
+var f=document.createElement('iframe');
+f.src='https://www.youtube-nocookie.com/embed/'+a.getAttribute('data-yt')+'?autoplay=1&rel=0';
+f.title=a.getAttribute('data-title')||'YouTube video';
+f.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+f.allowFullscreen=true;f.referrerPolicy='strict-origin-when-cross-origin';
+a.replaceWith(f);f.focus();});});
+})();</script>
+</body>
+</html>
