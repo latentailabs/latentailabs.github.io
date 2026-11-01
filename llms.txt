@@ -12,6 +12,7 @@ This site hosts short original summaries and FAQs. The full articles are the can
 - [Why AI Clocks Say 10:10: How Image Diffusion Works](https://latentailabs.github.io/how-ai-generates-images/): Diffusion, latent space and flow matching on FLUX.2 and SDXL, and why a 7:25 clock comes out as 10:10.
 - [How Vision-Language Models See: ViT, CLIP, SigLIP](https://latentailabs.github.io/how-vlms-see-images/): Why an “iPod” sticker fools CLIP, and how Qwen2.5-VL turns pixels into tokens a language model can read.
 - [How AI Generates Video: Wan2.1 and Sora Explained](https://latentailabs.github.io/how-ai-generates-video/): Wan2.1 on a real GPU: 3D causal VAEs, spacetime tubes, 3D RoPE, simultaneous denoising and why a ball vanishes behind a pillar.
+- [Looped Transformers Explained: Huginn on an A100 GPU](https://latentailabs.github.io/looped-transformers/): Huginn-0125 on an A100: one 4-layer core reused up to 132 layers deep, when each problem locks in, and what thinking in vectors costs.
 
 ## Open models for Indian languages (summaries on this site)
 
@@ -32,6 +33,7 @@ This site hosts short original summaries and FAQs. The full articles are the can
 - [Yama Judges, Chitragupta Keeps the Records: Open-Source AI for Indian Languages](https://pub.towardsai.net/yama-judges-chitragupta-keeps-the-records-open-source-ai-for-indian-languages-b7f8bf3b7576): full article, published 2026-10-24.
 - [Nandi Carries Every Complaint to the Right Desk: Open-Source AI for Indian Languages](https://pub.towardsai.net/nandi-carries-every-complaint-to-the-right-desk-open-source-ai-for-indian-languages-743b55c912a2): full article, published 2026-10-30.
 - [My Model Thought Tamil Was Telugu: Open-Source Language ID for Hinglish, Tanglish and Kanglish](https://pub.towardsai.net/my-model-thought-tamil-was-telugu-open-source-language-id-for-hinglish-tanglish-and-kanglish-604547310cd0): full article, published 2026-10-31.
+- [How Looped Transformers Think 132 Layers Deep Without Words: Huginn-0125 on an A100](https://aiadvances.org/how-looped-transformers-think-132-layers-deep-without-words-huginn-0125-on-an-a100-3f199ec2f3fb): full article, published 2026-10-30.
 
 ## Videos
 
@@ -41,6 +43,7 @@ This site hosts short original summaries and FAQs. The full articles are the can
 - [Every Clock Says 10:10? How AI Actually Generates Images](https://www.youtube.com/watch?v=IbvT1j8xZfA): companion video for Part 4.
 - [Why Does an “iPod” Sticker Fool AI? How Vision-Language Models Actually See Images](https://www.youtube.com/watch?v=7Ke2RRAjM6E): companion video for Part 5.
 - [How AI Generates Video: Inside Sora & Wan2.1 on a Real GPU](https://www.youtube.com/watch?v=v1hzPH3RVZw): companion video for Part 6.
+- [How Looped Transformers Think Without Words (Huginn-3.5B)](https://www.youtube.com/watch?v=U-rAzBcLnTM): companion video for Part 8.
 
 ## About
 
