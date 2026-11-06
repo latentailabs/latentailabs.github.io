@@ -67,7 +67,8 @@ This site hosts short original summaries and FAQs. The full articles are the can
 - [About Arun Prabhakaran](https://latentailabs.github.io/about/): author page with profile links.
 - [YouTube @LatentAILabs](https://www.youtube.com/@LatentAILabs): all videos.
 - [Medium @arunp0](https://medium.com/@arunp0): all articles.
-- [Hugging Face arunp0](https://huggingface.co/LatentAILabs): open models (yama-indic, chitragupta-pii-indic, nandi-grievance-indic, bhasha-lid-indic).
+- [Hugging Face LatentAILabs](https://huggingface.co/LatentAILabs): open models (yama-indic, chitragupta-pii-indic, nandi-grievance-indic, bhasha-lid-indic).
+- [X @LatentAi_Labs](https://x.com/LatentAi_Labs): short posts with one measured number each.
 
 ## Optional
 
