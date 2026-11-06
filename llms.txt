@@ -14,6 +14,11 @@ This site hosts short original summaries and FAQs. The full articles are the can
 - [How AI Generates Video: Wan2.1 and Sora Explained](https://latentailabs.github.io/how-ai-generates-video/): Wan2.1 on a real GPU: 3D causal VAEs, spacetime tubes, 3D RoPE, simultaneous denoising and why a ball vanishes behind a pillar.
 - [Looped Transformers Explained: Huginn on an A100 GPU](https://latentailabs.github.io/looped-transformers/): Huginn-0125 on an A100: one 4-layer core reused up to 132 layers deep, when each problem locks in, and what thinking in vectors costs.
 - [Mixture of Experts Explained: 35B Stored, 3B Used](https://latentailabs.github.io/mixture-of-experts/): OLMoE's routers traced live on an A100: where MoE weights sit, three frontier blueprints, router collapse, expert blocking and the batch-1 speed catch.
+- [Diffusion LLMs Explained: LLaDA-8B on an A100 GPU](https://latentailabs.github.io/diffusion-llms/): LLaDA-8B against Qwen2.5-7B on an A100: why parallel decoding locks the ending first, mixes up city names in one step, and needs a cache to win.
+
+## How AI Agents Actually Work (summaries on this site)
+
+- [What Happens in an LLM API Call? Measured on an A100](https://latentailabs.github.io/llm-api-call/): Qwen3-8B on an A100, one request at a time: why the model forgets, what a reused prefix saves, why the template matters and why output tokens are slow.
 
 ## Open models for Indian languages (summaries on this site)
 
@@ -38,6 +43,8 @@ This site hosts short original summaries and FAQs. The full articles are the can
 - [How Looped Transformers Think 132 Layers Deep Without Words: Huginn-0125 on an A100](https://aiadvances.org/how-looped-transformers-think-132-layers-deep-without-words-huginn-0125-on-an-a100-3f199ec2f3fb): full article, published 2026-10-30.
 - [How Mixture-Of-Experts Runs 35B AI on 3B Of Math](https://pub.towardsai.net/how-mixture-of-experts-runs-35b-ai-on-3b-of-math-969154a9432b): full article, published 2026-11-02.
 - [My Model Thought Tamil Was Telugu, Part 2: How 51,000 YouTube Comments Fixed It](https://pub.towardsai.net/my-model-thought-tamil-was-telugu-part-2-how-51-000-youtube-comments-fixed-it-85793804d632): full article, published 2026-11-02.
+- [How Diffusion LLMs Write 64 Words at Once on an A100 GPU](https://pub.towardsai.net/how-diffusion-llms-write-64-words-at-once-on-an-a100-gpu-779d5ca085ad): full article, published 2026-11-04.
+- [What Happens in 1 LLM API Call? Measured on GPU With Qwen3-8B](https://pub.towardsai.net/what-happens-in-1-llm-api-call-measured-on-gpu-with-qwen3-8b-3654ffb0e290): full article, published 2026-11-05.
 
 ## Videos
 
@@ -49,6 +56,8 @@ This site hosts short original summaries and FAQs. The full articles are the can
 - [How AI Generates Video: Inside Sora & Wan2.1 on a Real GPU](https://www.youtube.com/watch?v=v1hzPH3RVZw): companion video for Part 6.
 - [How Looped Transformers Think Without Words (Huginn-3.5B)](https://www.youtube.com/watch?v=U-rAzBcLnTM): companion video for Part 8.
 - [How Mixture-of-Experts Runs 35B AI on 3B of Math](https://www.youtube.com/watch?v=Hf4qJ1a2LUo): companion video for Part 9.
+- [64 Words at Once? How Diffusion LLMs Actually Work](https://www.youtube.com/watch?v=WNfrA_zpDgc): companion video for Part 10.
+- [What Happens in 1 LLM API Call? (494x Speed Gap)](https://www.youtube.com/watch?v=qv8PDE7JpXs): companion video for Part 1.
 
 ## About
 
