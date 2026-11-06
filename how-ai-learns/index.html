@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="google-site-verification" content="z2GgSNcEbJMxnxbXFNmq_I1h15v5GLVRt9AGPBNkRJo">
+<meta name="msvalidate.01" content="A07B0FDD1116A7D50360329D6832D23B">
+<title>How AI Learns: Backprop, AdamW and LoRA on Qwen3-4B</title>
+<meta name="description" content="How an LLM learns, measured on Qwen3-4B: loss, backprop through 36 layers, AdamW vs SGD, the 68.87 GB training memory bill and a 21.92 s Rank-8 LoRA run.">
+<meta name="author" content="Arun Prabhakaran">
+<link rel="canonical" href="https://latentailabs.github.io/how-ai-learns/">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta property="og:site_name" content="Latent AI Labs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How AI Learns: Backprop, AdamW and LoRA on Qwen3-4B">
+<meta property="og:description" content="How an LLM learns, measured on Qwen3-4B: loss, backprop through 36 layers, AdamW vs SGD, the 68.87 GB training memory bill and a 21.92 s Rank-8 LoRA run.">
+<meta property="og:url" content="https://latentailabs.github.io/how-ai-learns/">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.ytimg.com/vi/7PHJJMDZU3E/hqdefault.jpg">
+<meta property="og:image:alt" content="How AI Learns: Backprop, AdamW and LoRA on Qwen3-4B">
+<meta name="twitter:image" content="https://i.ytimg.com/vi/7PHJJMDZU3E/hqdefault.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="How AI Learns: Backprop, AdamW and LoRA on Qwen3-4B">
+<meta name="twitter:description" content="How an LLM learns, measured on Qwen3-4B: loss, backprop through 36 layers, AdamW vs SGD, the 68.87 GB training memory bill and a 21.92 s Rank-8 LoRA run.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#FAFAFA" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0F172A" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
+<link rel="stylesheet" href="/style.css">
+<link rel="alternate" type="text/plain" title="llms.txt" href="/llms.txt">
+<script>(function(){try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<meta property="article:author" content="https://latentailabs.github.io/about/">
+<meta property="article:published_time" content="2026-11-06">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "TechArticle",
+ "@id": "https://latentailabs.github.io/how-ai-learns/#article",
+ "headline": "How AI Learns: Backprop, AdamW and LoRA on Qwen3-4B",
+ "alternativeHeadline": "How AI Actually Learns: Backpropagation, AdamW & Rank-8 LoRA Measured on Qwen3-4B",
+ "description": "How an LLM learns, measured on Qwen3-4B: loss, backprop through 36 layers, AdamW vs SGD, the 68.87 GB training memory bill and a 21.92 s Rank-8 LoRA run.",
+ "abstract": "Training is one loop repeated: score the next token with cross-entropy, push the error back through every layer, and nudge each weight. On Qwen3-4B, residual connections kept gradients alive through all 36 layers, AdamW beat plain SGD by a wide margin in 25 steps, full fine-tuning would need about 68.87 GB of GPU memory by the standard 16-byte count, and a Rank-8 LoRA adapter learned a new fact in 21.92 seconds.",
+ "url": "https://latentailabs.github.io/how-ai-learns/",
+ "mainEntityOfPage": "https://latentailabs.github.io/how-ai-learns/",
+ "inLanguage": "en",
+ "datePublished": "2026-11-06",
+ "dateModified": "2026-11-06",
+ "author": {
+  "@type": "Person",
+  "@id": "https://latentailabs.github.io/about/#person",
+  "name": "Arun Prabhakaran",
+  "url": "https://latentailabs.github.io/about/"
+ },
+ "publisher": {
+  "@type": "Organization",
+  "@id": "https://latentailabs.github.io/#organization",
+  "name": "Latent AI Labs",
+  "url": "https://latentailabs.github.io/"
+ },
+ "keywords": "how neural networks learn, backpropagation, cross-entropy loss, residual connections, AdamW, mixed-precision training memory, LoRA, Qwen3-4B",
+ "isPartOf": {
+  "@type": "CreativeWorkSeries",
+  "name": "How AI Actually Works",
+  "url": "https://latentailabs.github.io/#series-how-ai-works"
+ },
+ "isBasedOn": {
+  "@type": "Article",
+  "headline": "How AI Actually Learns: Backpropagation, AdamW & Rank-8 LoRA Measured on Qwen3-4B",
+  "url": "https://pub.towardsai.net/how-ai-actually-learns-backpropagation-adamw-rank-8-lora-measured-on-qwen3-4b-d27637d3281a",
+  "datePublished": "2026-11-05",
+  "author": {
+   "@type": "Person",
+   "@id": "https://latentailabs.github.io/about/#person",
+   "name": "Arun Prabhakaran",
+   "url": "https://latentailabs.github.io/about/"
+  },
+  "publisher": {
+   "@type": "Organization",
+   "name": "Towards AI"
+  }
+ },
+ "citation": "https://pub.towardsai.net/how-ai-actually-learns-backpropagation-adamw-rank-8-lora-measured-on-qwen3-4b-d27637d3281a",
+ "image": "https://i.ytimg.com/vi/7PHJJMDZU3E/hqdefault.jpg",
+ "video": {
+  "@id": "https://latentailabs.github.io/how-ai-learns/#video"
+ }
+}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "@id": "https://latentailabs.github.io/how-ai-learns/#faq",
+ "url": "https://latentailabs.github.io/how-ai-learns/",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "How does a neural network learn from its mistakes?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "It makes a prediction, measures how wrong it was with a loss, and then asks how each weight contributed to that error. Backpropagation answers this with the chain rule, giving every weight a gradient. An optimizer moves each weight a small step against its gradient, and repeating the loop over many examples slowly lowers the loss."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Why do language models use cross-entropy loss?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Predicting the next token is a choice among 151,936 options, so the model outputs a probability for each one. Cross-entropy takes the negative log of the probability given to the right token. A near-certain correct guess costs almost nothing, while a confident wrong guess costs a lot, which gives the model a strong, well-behaved signal to fix it."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Why are residual connections needed in deep networks?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Without them, the gradient is multiplied by every layer's derivative on the way back, and if each one shrinks it a little, almost nothing reaches the early layers. A skip connection adds the layer's input to its output, so the derivative always contains an identity term. In our 36-layer test that kept the first layer's gradient large instead of vanishing."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Why does fine-tuning a 4B model need so much GPU memory?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Inference only needs the weights, about 8 GB in BF16 for Qwen3-4B. Training also keeps gradients, an FP32 master copy of the weights and two AdamW moment buffers, 16 bytes per parameter in total, plus saved activations. By that standard count, full fine-tuning comes to roughly 68.87 GB, which is a calculation rather than a measured run."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How does LoRA make fine-tuning cheaper?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "LoRA leaves the original weights frozen and learns two thin matrices per layer whose product is the update. At rank 8 that is 0.41% of the model's weight count, so the adapter and its optimizer state fit in 198.18 MB. Matrix B starts at zero, so training begins from the exact base model, and the finished adapter can be merged in."
+   }
+  }
+ ]
+}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "BreadcrumbList",
+ "itemListElement": [
+  {
+   "@type": "ListItem",
+   "position": 1,
+   "name": "Home",
+   "item": "https://latentailabs.github.io/"
+  },
+  {
+   "@type": "ListItem",
+   "position": 2,
+   "name": "How AI Actually Works",
+   "item": "https://latentailabs.github.io/#series-how-ai-works"
+  },
+  {
+   "@type": "ListItem",
+   "position": 3,
+   "name": "Ep 7",
+   "item": "https://latentailabs.github.io/how-ai-learns/"
+  }
+ ]
+}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "VideoObject",
+ "@id": "https://latentailabs.github.io/how-ai-learns/#video",
+ "name": "How AI Actually Learns: Watching Qwen3-4B Rewire on a GPU",
+ "description": "How an LLM learns, measured on Qwen3-4B: loss, backprop through 36 layers, AdamW vs SGD, the 68.87 GB training memory bill and a 21.92 s Rank-8 LoRA run.",
+ "thumbnailUrl": [
+  "https://i.ytimg.com/vi/7PHJJMDZU3E/hqdefault.jpg"
+ ],
+ "embedUrl": "https://www.youtube-nocookie.com/embed/7PHJJMDZU3E",
+ "contentUrl": "https://www.youtube.com/watch?v=7PHJJMDZU3E",
+ "url": "https://www.youtube.com/watch?v=7PHJJMDZU3E",
+ "author": {
+  "@type": "Person",
+  "@id": "https://latentailabs.github.io/about/#person",
+  "name": "Arun Prabhakaran",
+  "url": "https://latentailabs.github.io/about/"
+ },
+ "publisher": {
+  "@type": "Organization",
+  "@id": "https://latentailabs.github.io/#organization",
+  "name": "Latent AI Labs",
+  "url": "https://latentailabs.github.io/"
+ },
+ "uploadDate": "2026-10-28T02:19:46-07:00",
+ "duration": "PT23M31S",
+ "hasPart": [
+  {
+   "@type": "Clip",
+   "name": "Full Fine-Tuning vs LoRA on a Live GPU (69GB Calculated vs 20s)",
+   "startOffset": 0,
+   "endOffset": 45,
+   "url": "https://www.youtube.com/watch?v=7PHJJMDZU3E&t=0s"
+  },
+  {
+   "@type": "Clip",
+   "name": "Part 1: From 1 Weight to a Perceptron, MLP & Weight Matrices",
+   "startOffset": 45,
+   "endOffset": 234,
+   "url": "https://www.youtube.com/watch?v=7PHJJMDZU3E&t=45s"
+  },
+  {
+   "@type": "Clip",
+   "name": "Part 2: Logits, Softmax & Cross-Entropy Loss (-ln P)",
+   "startOffset": 234,
+   "endOffset": 376,
+   "url": "https://www.youtube.com/watch?v=7PHJJMDZU3E&t=234s"
+  },
+  {
+   "@type": "Clip",
+   "name": "Part 3: Backpropagation, the Chain Rule & Weight Gradients (dL/dW)",
+   "startOffset": 376,
+   "endOffset": 510,
+   "url": "https://www.youtube.com/watch?v=7PHJJMDZU3E&t=376s"
+  },
+  {
+   "@type": "Clip",
+   "name": "Part 4: Vanishing Gradients vs. Residual Skip Connections (x + Layer(x))",
+   "startOffset": 510,
+   "endOffset": 640,
+   "url": "https://www.youtube.com/watch?v=7PHJJMDZU3E&t=510s"
+  },
+  {
+   "@type": "Clip",
+   "name": "Part 5: Why an 8GB Model Needs 69GB to Train (16-Byte Memory Layout)",
+   "startOffset": 640,
+   "endOffset": 781,
+   "url": "https://www.youtube.com/watch?v=7PHJJMDZU3E&t=640s"
+  },
+  {
+   "@type": "Clip",
+   "name": "Part 6: Vanilla SGD vs. AdamW Optimizer (Momentum & Adaptive Variance)",
+   "startOffset": 781,
+   "endOffset": 921,
+   "url": "https://www.youtube.com/watch?v=7PHJJMDZU3E&t=781s"
+  },
+  {
+   "@type": "Clip",
+   "name": "Part 7: Forgetting Risk & Rank-8 LoRA Matrices (A & B)",
+   "startOffset": 921,
+   "endOffset": 1129,
+   "url": "https://www.youtube.com/watch?v=7PHJJMDZU3E&t=921s"
+  },
+  {
+   "@type": "Clip",
+   "name": "Part 8: Live 20s GPU Fine-Tuning, Gradient SVD & In-Place Weight Merging",
+   "startOffset": 1129,
+   "endOffset": 1294,
+   "url": "https://www.youtube.com/watch?v=7PHJJMDZU3E&t=1129s"
+  },
+  {
+   "@type": "Clip",
+   "name": "Summary: The Complete Neural Network Learning Pipeline",
+   "startOffset": 1294,
+   "endOffset": 1411,
+   "url": "https://www.youtube.com/watch?v=7PHJJMDZU3E&t=1294s"
+  }
+ ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+<div class="bar">
+<a class="brand" href="/" aria-label="Latent AI Labs home"><svg class="mark" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="0.75" y="0.75" width="4.5" height="4.5" rx="1" fill="currentColor" fill-opacity="1.0"/><rect x="0.75" y="6.75" width="4.5" height="4.5" rx="1" fill="currentColor" fill-opacity="0.6"/><rect x="6.75" y="6.75" width="4.5" height="4.5" rx="1" fill="currentColor" fill-opacity="1.0"/><rect x="0.75" y="12.75" width="4.5" height="4.5" rx="1" fill="currentColor" fill-opacity="0.4"/><rect x="6.75" y="12.75" width="4.5" height="4.5" rx="1" fill="currentColor" fill-opacity="0.6"/><rect x="12.75" y="12.75" width="4.5" height="4.5" rx="1" fill="currentColor" fill-opacity="1.0"/><rect x="0.75" y="18.75" width="4.5" height="4.5" rx="1" fill="currentColor" fill-opacity="0.25"/><rect x="6.75" y="18.75" width="4.5" height="4.5" rx="1" fill="currentColor" fill-opacity="0.4"/><rect x="12.75" y="18.75" width="4.5" height="4.5" rx="1" fill="currentColor" fill-opacity="0.6"/><rect x="18.75" y="18.75" width="4.5" height="4.5" rx="1" fill="currentColor" fill-opacity="1.0"/></svg><span>Latent AI Labs</span></a>
+<nav class="nav" aria-label="Main">
+<a href="/#series">Series</a>
+<a href="/about/">About</a>
+<a href="https://www.youtube.com/@LatentAILabs" rel="me">YouTube</a>
+<a href="https://medium.com/@arunp0" rel="me">Medium</a>
+</nav>
+<button class="theme-toggle" type="button" aria-label="Toggle dark mode" aria-pressed="false"><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M6.3 17.7l-1.4 1.4M19.1 4.9l-1.4 1.4"/></svg></button>
+</div>
+</header>
+<main id="main">
+<div class="container article-wrap">
+<nav class="crumbs mono" aria-label="Breadcrumb"><ol>
+<li><a href="/">Home</a></li>
+<li><a href="/#series-how-ai-works">How AI Actually Works</a></li>
+<li aria-current="page">Ep 7</li>
+</ol></nav>
+<article class="prose">
+<header class="art-head">
+<p class="eyebrow">EP 07 · How AI Actually Works</p>
+<h1>How AI Actually Learns: Backpropagation, AdamW &amp; Rank-8 LoRA Measured on Qwen3-4B</h1>
+<p class="dek">From one weight to Qwen3-4B on a Blackwell GPU: cross-entropy loss, gradients through 36 layers, AdamW, the full fine-tuning memory bill and Rank-8 LoRA.</p>
+<p class="meta mono">By <a href="/about/">Arun Prabhakaran</a> · Originally published 5 Nov 2026 in Towards AI · 31 min full read</p>
+</header>
+<section class="tldr" aria-labelledby="tldr-h">
+<h2 id="tldr-h" class="eyebrow">TL;DR</h2>
+<p>Training is one loop repeated: score the next token with cross-entropy, push the error back through every layer, and nudge each weight. On Qwen3-4B, residual connections kept gradients alive through all 36 layers, AdamW beat plain SGD by a wide margin in 25 steps, full fine-tuning would need about 68.87 GB of GPU memory by the standard 16-byte count, and a Rank-8 LoRA adapter learned a new fact in 21.92 seconds.</p>
+</section>
+<ul class="chips readout" aria-label="Key measurements"><li><span class="v">4,022,468,096</span><span class="l">parameters in Qwen3-4B</span></li><li><span class="v">68.87 GB</span><span class="l">calculated memory for full fine-tuning</span></li><li><span class="v">0.0936 vs 3.4469</span><span class="l">nats after 25 steps, AdamW vs SGD</span></li><li><span class="v">0.41%</span><span class="l">of the weights trained by Rank-8 LoRA</span></li><li><span class="v">21.92 s</span><span class="l">for 40 LoRA steps on the GPU</span></li></ul>
+<figure class="video">
+<a class="yt" href="https://www.youtube.com/watch?v=7PHJJMDZU3E" data-yt="7PHJJMDZU3E" data-title="How AI Actually Learns: Watching Qwen3-4B Rewire on a GPU" aria-label="Play video: How AI Actually Learns: Watching Qwen3-4B Rewire on a GPU">
+<img src="https://i.ytimg.com/vi/7PHJJMDZU3E/hqdefault.jpg" alt="" width="480" height="360" fetchpriority="high" decoding="async">
+<span class="play" aria-hidden="true"><svg class="i" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polygon points="7 4 20 12 7 20 7 4"/></svg></span>
+</a>
+<figcaption>Companion video · <a href="https://www.youtube.com/watch?v=7PHJJMDZU3E">How AI Actually Learns: Watching Qwen3-4B Rewire on a GPU</a></figcaption>
+</figure>
+<section class="chapters" aria-labelledby="ch-h"><h2 id="ch-h">Video chapters</h2><ol><li><a href="https://www.youtube.com/watch?v=7PHJJMDZU3E&amp;t=0s"><span class="mono">0:00</span>Full Fine-Tuning vs LoRA on a Live GPU (69GB Calculated vs 20s)</a></li><li><a href="https://www.youtube.com/watch?v=7PHJJMDZU3E&amp;t=45s"><span class="mono">0:45</span>Part 1: From 1 Weight to a Perceptron, MLP &amp; Weight Matrices</a></li><li><a href="https://www.youtube.com/watch?v=7PHJJMDZU3E&amp;t=234s"><span class="mono">3:54</span>Part 2: Logits, Softmax &amp; Cross-Entropy Loss (-ln P)</a></li><li><a href="https://www.youtube.com/watch?v=7PHJJMDZU3E&amp;t=376s"><span class="mono">6:16</span>Part 3: Backpropagation, the Chain Rule &amp; Weight Gradients (dL/dW)</a></li><li><a href="https://www.youtube.com/watch?v=7PHJJMDZU3E&amp;t=510s"><span class="mono">8:30</span>Part 4: Vanishing Gradients vs. Residual Skip Connections (x + Layer(x))</a></li><li><a href="https://www.youtube.com/watch?v=7PHJJMDZU3E&amp;t=640s"><span class="mono">10:40</span>Part 5: Why an 8GB Model Needs 69GB to Train (16-Byte Memory Layout)</a></li><li><a href="https://www.youtube.com/watch?v=7PHJJMDZU3E&amp;t=781s"><span class="mono">13:01</span>Part 6: Vanilla SGD vs. AdamW Optimizer (Momentum &amp; Adaptive Variance)</a></li><li><a href="https://www.youtube.com/watch?v=7PHJJMDZU3E&amp;t=921s"><span class="mono">15:21</span>Part 7: Forgetting Risk &amp; Rank-8 LoRA Matrices (A &amp; B)</a></li><li><a href="https://www.youtube.com/watch?v=7PHJJMDZU3E&amp;t=1129s"><span class="mono">18:49</span>Part 8: Live 20s GPU Fine-Tuning, Gradient SVD &amp; In-Place Weight Merging</a></li><li><a href="https://www.youtube.com/watch?v=7PHJJMDZU3E&amp;t=1294s"><span class="mono">21:34</span>Summary: The Complete Neural Network Learning Pipeline</a></li></ol></section>
+<section aria-labelledby="sum">
+<h2 id="sum">Summary</h2>
+<p>This episode starts from a single number. One weight multiplies an input, the error against the target gives a gradient, and one step of gradient descent fixes the output. Add a bias and a non-linear activation and you have a perceptron. Stack those into matrices and you reach Qwen3-4B, whose 4,022,468,096 parameters were counted layer by layer on an RTX PRO 6000 Blackwell. Before training, the model invented an answer about a made-up spacecraft fault code, scoring a perplexity of 79.24 on the true specification.</p>
+<p>Learning that fact runs through cross-entropy loss, which punishes confident mistakes far more than mild ones, and backpropagation, which turns the loss into a gradient for every weight by the chain rule. In a controlled 36-layer test, a plain stack lost its gradient almost entirely before reaching the first layer, while the same stack with skip connections kept it strong. On the live model no layer collapsed. In 25 steps on the same adapter, AdamW reached 0.0936 nats while plain SGD stalled at 3.4469.</p>
+<p>The catch is memory. With BF16 weights and gradients plus FP32 master weights and two AdamW moments, every parameter costs 16 bytes, so full fine-tuning comes to about 68.87 GB including estimated activations. That figure is calculated, not measured. Rank-8 LoRA freezes the base model, trains 16,515,072 adapter weights in 198.18 MB of state, learned the fact in 21.92 seconds and can be merged back into the base weights.</p>
+<p class="note">This page is a short summary written for this site. Every figure, table, code sample and reference is in the <a href="https://pub.towardsai.net/how-ai-actually-learns-backpropagation-adamw-rank-8-lora-measured-on-qwen3-4b-d27637d3281a">original article on Towards AI</a>.</p>
+</section>
+<section class="faq" aria-labelledby="faq-h">
+<h2 id="faq-h">Questions this article answers</h2>
+<details open><summary><span>How does a neural network learn from its mistakes?</span><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg></summary><p>It makes a prediction, measures how wrong it was with a loss, and then asks how each weight contributed to that error. Backpropagation answers this with the chain rule, giving every weight a gradient. An optimizer moves each weight a small step against its gradient, and repeating the loop over many examples slowly lowers the loss.</p></details>
+<details><summary><span>Why do language models use cross-entropy loss?</span><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg></summary><p>Predicting the next token is a choice among 151,936 options, so the model outputs a probability for each one. Cross-entropy takes the negative log of the probability given to the right token. A near-certain correct guess costs almost nothing, while a confident wrong guess costs a lot, which gives the model a strong, well-behaved signal to fix it.</p></details>
+<details><summary><span>Why are residual connections needed in deep networks?</span><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg></summary><p>Without them, the gradient is multiplied by every layer&#x27;s derivative on the way back, and if each one shrinks it a little, almost nothing reaches the early layers. A skip connection adds the layer&#x27;s input to its output, so the derivative always contains an identity term. In our 36-layer test that kept the first layer&#x27;s gradient large instead of vanishing.</p></details>
+<details><summary><span>Why does fine-tuning a 4B model need so much GPU memory?</span><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg></summary><p>Inference only needs the weights, about 8 GB in BF16 for Qwen3-4B. Training also keeps gradients, an FP32 master copy of the weights and two AdamW moment buffers, 16 bytes per parameter in total, plus saved activations. By that standard count, full fine-tuning comes to roughly 68.87 GB, which is a calculation rather than a measured run.</p></details>
+<details><summary><span>How does LoRA make fine-tuning cheaper?</span><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg></summary><p>LoRA leaves the original weights frozen and learns two thin matrices per layer whose product is the update. At rank 8 that is 0.41% of the model&#x27;s weight count, so the adapter and its optimizer state fit in 198.18 MB. Matrix B starts at zero, so training begins from the exact base model, and the finished adapter can be merged in.</p></details>
+</section>
+<aside class="cta-card" aria-label="Read the original article">
+<p class="eyebrow">The full story</p>
+<p class="cta-title">How AI Actually Learns: Backpropagation, AdamW &amp; Rank-8 LoRA Measured on Qwen3-4B</p>
+<p>The complete walkthrough with all measurements, figures and sources. About 31 minutes.</p>
+<div class="btns"><a class="btn primary" href="https://pub.towardsai.net/how-ai-actually-learns-backpropagation-adamw-rank-8-lora-measured-on-qwen3-4b-d27637d3281a"><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg><span>Read the full story on Medium</span><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a><a class="btn ghost" href="https://www.youtube.com/watch?v=7PHJJMDZU3E"><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2.5 17a24.1 24.1 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.6 49.6 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.1 24.1 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.6 49.6 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/><path d="m10 15 5-3-5-3z"/></svg><span>Watch the video</span></a><a class="btn ghost" href="https://huggingface.co/Qwen/Qwen3-4B-Instruct-2507"><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg><span>Qwen3-4B-Instruct-2507 on Hugging Face</span></a><a class="btn ghost" href="https://arxiv.org/abs/2106.09685"><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg><span>LoRA, Hu et al. 2022, arXiv:2106.09685</span></a><a class="btn ghost" href="https://arxiv.org/abs/2405.09673"><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg><span>LoRA Learns Less and Forgets Less, arXiv:2405.09673</span></a></div>
+</aside>
+</article>
+<nav class="pager" aria-label="Previous and next">
+<a class="prev" href="/bhasha-language-id/"><span class="eyebrow">← Previous · MODEL 04</span>Bhasha: Word-Level Language ID for Code-Mixed Indian Text</a>
+<a class="next" href="/looped-transformers/"><span class="eyebrow">Next · EP 08 →</span>Looped Transformers Explained: Huginn on an A100 GPU</a>
+</nav>
+<section class="more" aria-labelledby="more-h"><h2 id="more-h" class="eyebrow">More in How AI Actually Works</h2><ul><li><a href="/how-chatgpt-works/"><span class="mono">EP 01</span>How ChatGPT Works: Why It Says Strawberry Has 2 R&#x27;s</a></li><li><a href="/thinking-models/"><span class="mono">EP 02</span>Why AI Says “Wait”: How Thinking Models Work</a></li><li><a href="/long-context-kv-cache/"><span class="mono">EP 03</span>How LLMs Read a Whole Book: Long Context &amp; KV-Cache</a></li><li><a href="/how-ai-generates-images/"><span class="mono">EP 04</span>Why AI Clocks Say 10:10: How Image Diffusion Works</a></li><li><a href="/how-vlms-see-images/"><span class="mono">EP 05</span>How Vision-Language Models See: ViT, CLIP, SigLIP</a></li><li><a href="/how-ai-generates-video/"><span class="mono">EP 06</span>How AI Generates Video: Wan2.1 and Sora Explained</a></li><li><a href="/looped-transformers/"><span class="mono">EP 08</span>Looped Transformers Explained: Huginn on an A100 GPU</a></li><li><a href="/mixture-of-experts/"><span class="mono">EP 09</span>Mixture of Experts Explained: 35B Stored, 3B Used</a></li><li><a href="/diffusion-llms/"><span class="mono">EP 10</span>Diffusion LLMs Explained: LLaDA-8B on an A100 GPU</a></li></ul></section>
+</div>
+</main>
+<footer class="site-footer">
+<div class="container foot">
+<div>
+<a class="brand" href="/"><svg class="mark" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="0.75" y="0.75" width="4.5" height="4.5" rx="1" fill="currentColor" fill-opacity="1.0"/><rect x="0.75" y="6.75" width="4.5" height="4.5" rx="1" fill="currentColor" fill-opacity="0.6"/><rect x="6.75" y="6.75" width="4.5" height="4.5" rx="1" fill="currentColor" fill-opacity="1.0"/><rect x="0.75" y="12.75" width="4.5" height="4.5" rx="1" fill="currentColor" fill-opacity="0.4"/><rect x="6.75" y="12.75" width="4.5" height="4.5" rx="1" fill="currentColor" fill-opacity="0.6"/><rect x="12.75" y="12.75" width="4.5" height="4.5" rx="1" fill="currentColor" fill-opacity="1.0"/><rect x="0.75" y="18.75" width="4.5" height="4.5" rx="1" fill="currentColor" fill-opacity="0.25"/><rect x="6.75" y="18.75" width="4.5" height="4.5" rx="1" fill="currentColor" fill-opacity="0.4"/><rect x="12.75" y="18.75" width="4.5" height="4.5" rx="1" fill="currentColor" fill-opacity="0.6"/><rect x="18.75" y="18.75" width="4.5" height="4.5" rx="1" fill="currentColor" fill-opacity="1.0"/></svg><span>Latent AI Labs</span></a>
+<p class="disamb">Latent AI Labs is Arun Prabhakaran's independent AI-explainer channel. It is a one-person project and is not affiliated with Latent AI, Inc. or Latent Labs.</p>
+</div>
+<ul class="same" aria-label="Profiles">
+<li><a href="https://medium.com/@arunp0" rel="me">Medium</a></li>
+<li><a href="https://www.youtube.com/@LatentAILabs" rel="me">YouTube</a></li>
+<li><a href="https://huggingface.co/LatentAILabs" rel="me">Hugging Face</a></li>
+<li><a href="https://github.com/arunp0" rel="me">GitHub</a></li>
+<li><a href="https://github.com/latentailabs">GitHub (org)</a></li>
+<li><a href="https://www.linkedin.com/in/arunp0/" rel="me">LinkedIn</a></li>
+<li><a href="/llms.txt">llms.txt</a></li>
+<li><a href="/sitemap.xml">Sitemap</a></li>
+</ul>
+<p class="copy mono">© 2026 Arun Prabhakaran · Full articles are published on Medium / Towards AI.</p>
+</div>
+</footer>
+<script>(function(){
+var b=document.querySelector('.theme-toggle');
+if(b){var r0=document.documentElement,c0=r0.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');b.setAttribute('aria-pressed',c0==='dark'?'true':'false');
+b.addEventListener('click',function(){
+var r=document.documentElement,cur=r.getAttribute('data-theme');
+if(!cur){cur=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+var n=cur==='dark'?'light':'dark';r.setAttribute('data-theme',n);
+b.setAttribute('aria-pressed',n==='dark'?'true':'false');
+try{localStorage.setItem('theme',n);}catch(e){}});}
+document.querySelectorAll('a.yt[data-yt]').forEach(function(a){
+a.addEventListener('click',function(ev){
+if(ev.metaKey||ev.ctrlKey||ev.shiftKey||ev.button!==0)return;ev.preventDefault();
+var f=document.createElement('iframe');
+f.src='https://www.youtube-nocookie.com/embed/'+a.getAttribute('data-yt')+'?autoplay=1&rel=0';
+f.title=a.getAttribute('data-title')||'YouTube video';
+f.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+f.allowFullscreen=true;f.referrerPolicy='strict-origin-when-cross-origin';
+a.replaceWith(f);f.focus();});});
+})();</script>
+</body>
+</html>
